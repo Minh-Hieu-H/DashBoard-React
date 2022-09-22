@@ -1,0 +1,27 @@
+.topnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+    height: var(--topnav-height);
+}
+.topnav__search {
+    position: relative;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--main-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var( --box-shadow);
+}
+.topnav__search >input {
+    padding:  10px 60px 10px 20px;
+    font-size: 1rem;
+    color: var(--txt-color)
+}
+.topnav__search >i {
+    font-size: 1.5rem;
+    position: absolute;
+    right: 20px;
+}
