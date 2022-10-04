@@ -18,9 +18,9 @@ const SidebarItem =(props)=> {
 }
 const Sidebar = () => {
   const locationPath = useLocation()
-  console.log(locationPath.pathname)
+
   const activeItem = sidebar_items.findIndex((item)=> item.route ===locationPath.pathname)
-  console.log(activeItem)
+
   return (
     <div className='sidebar'>
       <div className='sidebar__logo'>
