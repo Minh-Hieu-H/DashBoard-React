@@ -5,7 +5,7 @@
     padding: 30px;
     height: var(--topnav-height);
 }
-.topnav__search {
+/* .topnav__search {
     position: relative;
     height: 50px;
     display: flex;
@@ -31,7 +31,7 @@
     font-size: 1.5rem;
     position: absolute;
     right: 20px;
-}
+} */
 .topnav__right {
     display: flex;
     align-items: center;

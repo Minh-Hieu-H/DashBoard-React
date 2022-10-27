@@ -10,7 +10,6 @@ const ThemeReducer = (state = {}, action) => {
                 ...state,
                 color: action.payload
             }
-        
         default:
             return state
     }

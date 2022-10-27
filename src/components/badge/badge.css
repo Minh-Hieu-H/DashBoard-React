@@ -3,6 +3,7 @@
     color: var(--txt-white);
     border-radius: 10px;
     box-shadow: var(--box-shadow);
+    /* min-width: 200px; */
 }
 .badge-danger {
     background-color: var(--main-color-red);
@@ -18,4 +19,7 @@
 
 .badge-warning {
     background-color: var(--main-color-orange);
+}
+.badge-main {
+    background-color: var(--main-color);
 }

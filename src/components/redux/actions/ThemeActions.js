@@ -5,7 +5,6 @@ const setMode =  mode => {
     }
 }
 
-
 const setColor = color => {
     return {
         type: 'SET_COLOR',

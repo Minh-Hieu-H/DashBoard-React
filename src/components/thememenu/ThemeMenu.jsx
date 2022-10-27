@@ -59,24 +59,16 @@ const clickOutsideRef = (content_ref, toggle_ref)=> {
                 content_ref.current.classList.remove('active')
             }
         }
-
     })
 }
 const ThemeMenu = () => {
-
-  const menu_ref =useRef(null)
-
-  const menu_toggle_ref =useRef(null)
-
+  const menu_ref = useRef(null)
+  const menu_toggle_ref = useRef(null)
   clickOutsideRef(menu_ref, menu_toggle_ref)
-
   const setActiveMenu= () =>  menu_ref.current.classList.add('active')
-
   const closeMenu = () => menu_ref.current.classList.remove('active')
-
-  const [currMode,setcurrMode] = useState('light')
+  const [currMode, setcurrMode] = useState('light')
   const [currColor,setcurrColor] = useState('blue')
-
   const dispatch = useDispatch()
   const setMode = (mode)=> {
     setcurrMode(mode.id)
@@ -85,33 +77,27 @@ const ThemeMenu = () => {
   }
   const setColor = color => {
     setcurrColor(color.id)
-    
     localStorage.setItem('colorMode',color.class)
-
     dispatch(exportDefault.setColor(color.class))
   }
   useEffect(()=> {
-    
-    const themeClass = mode_settings.find(e =>e.class ===localStorage.getItem('themeMode','theme-mode-light'))
-
-    const colorClass = color__settings.find(e => e.class ===localStorage.getItem('colorMode','color-mode-light'))
-
+    const themeClass = mode_settings.find(e =>e.class === localStorage.getItem('themeMode','theme-mode-light'))
+    const colorClass = color__settings.find(e => e.class === localStorage.getItem('colorMode','color-mode-light'))
     if(themeClass !== undefined) setcurrMode(themeClass.id)
-    if(colorClass !==undefined) setColor(colorClass.id)
-  },[])
-
+    if(colorClass !== undefined) setColor(colorClass.id)
+  }, [])
   return (
     <div>
-        <button ref= {menu_toggle_ref} className='dropdown__toggle' onClick={()=> setActiveMenu()}>
+        <button ref={menu_toggle_ref} className='dropdown__toggle' onClick={()=> setActiveMenu()}>
             <i className='bx bx-palette'></i>
         </button>
-        <div  ref= {menu_ref}  className='theme-menu'>
-            <h4> Theme Settings</h4>
+        <div ref={menu_ref} className='theme-menu'>
+            <p style={{"fontSize":"20px"}}>Theme Settings</p>
             <button className='theme-menu__close' onClick={()=> closeMenu()}>
                 <i className='bx bx-x'></i>
             </button>
             <div className='theme-menu__select'>
-                <span> Choose mode</span>
+                <span>Choose mode</span>
                 <ul className='mode-list'>
                 {
                     mode_settings.map((item, index) => (
@@ -121,14 +107,12 @@ const ThemeMenu = () => {
                             </div>
                             <span>{item.name}</span>
                         </li>
-                        
                     ))
                 }
                 </ul>
-            
             </div> 
             <div className='theme-menu__select'>
-                <span> Choose Color</span>
+                <span>Choose Color</span>
                 <ul className='mode-list'>
                     {
                         color__settings.map((item,index)=> (

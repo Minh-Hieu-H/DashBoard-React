@@ -6,6 +6,7 @@
     --txt-color: #455560;
     --txt-white: #fff;
     --main-color: #349eff;
+    --main-color-bold: #006dd3;
     --second-color: #62b4ff;
     --box-shadow: rgba(149, 157,165,0.2) 0px 8px 24px;
 
@@ -21,6 +22,7 @@
 
     --main-color-blue: #349eff;
     --second-color-blue: #62b4ff;
+    --main-color-blue-bold: #006dd3;
 
     --main-color-cyan: #10d4d2;
     --second-color-cyan:#2ae9e6;
@@ -34,9 +36,9 @@
     --main-color-red: #fb0b12;
     --second-color-red: #ff4a6b;
 
-    --sidebar-width: 300px;
-    --border-radius:15px;
-    --topnav-height:110px;
+    --sidebar-width: 250px;
+    --border-radius: 15px;
+    --topnav-height: 110px;
 
     --transition-cubic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
     
@@ -82,10 +84,9 @@ input:focus{
     border:2px solid var(--main-color)
 }
 .page-header {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     text-transform: capitalize;
 }
-
 .card {
     padding: 30px;
     margin-bottom: 30px;
@@ -97,16 +98,28 @@ input:focus{
     height: 100%;
 }
 .card.full-height {
-    height: calc(100% - 30px);
+    height: calc(100%);
 }
-.card> div ~ div{
+/* .card> div ~ div{
     margin-top: 30px;
-} 
+}  */
 .card__header {
     text-transform: capitalize;
 }
+.card__body {
+    font-size: 20px;
+}
+    .card__body-p {
+        line-height: 36px;
+    }
+    .card__body p {
+        margin-bottom: 0;
+    }
 .card__footer {
     text-align: center;
+}
+.card-chart {
+    margin: 0 15px 10px;
 }
 .light-background {
     background-color: var(--main-bg-light);
@@ -141,4 +154,29 @@ input:focus{
 .orange-color {
     background-color: var(--main-color-orange);
     color: #fff;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
+.mb-0-5 {
+    margin-bottom: 0.5rem;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mr-0-5 {
+    margin-right: 0.5rem;
+}
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
 }

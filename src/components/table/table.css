@@ -1,23 +1,27 @@
-.table-wrapper {
-    overflow-y: auto;
-}
 table {
     border-spacing: 0px;
     width: 100%;
-    min-width: 400px;
+    font-size: 16px;
+    overflow: hidden;
 }
 thead {
     background-color: var(--second-bg);
 }
 tr {
-    text-align: left;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
 }
 th, td {
-    padding:15px 10px;
+    padding: 15px 10px;
+    align-items: center;
+}
+th {
+    padding: 15px 10px;
     text-transform: capitalize;
 }
-tbody> tr:hover {
-    background-color: var(--main-color);
+tbody > tr:hover {
+    background-color: #c6c6c6;
     color: var(--txt-white);
 }
 .table__pagination {
