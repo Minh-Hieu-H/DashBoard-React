@@ -25,7 +25,7 @@ const Sources = () => {
     <td>{item.id}</td>
     <td>{item.name}</td>
     <td>{item.scanned}</td>
-    <td><div className=""><Badge className="text-bold" type={item.type} clickable={"none"} content={item.type === "danger" ? "Youtube channel" : "Facebook fanpage"}/></div></td>
+    <td><div className="flex-div"><Badge className="text-bold" type={item.type} clickable={"none"} content={item.type === "danger" ? "Youtube channel" : "Facebook fanpage"}/></div></td>
     <td><a href={item.url}>{item.url}</a></td>
     <td><div className="flex-center"><button onClick={viewDetails} className="btn btn-view"><i className="bx bx-search-alt mr-0-5"></i>Details</button></div></td>
     <td><div className="flex-center"><button className="btn btn-delete"><i className="bx bx-user-x mr-0-5"></i>Unfollow</button></div></td>
