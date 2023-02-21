@@ -6,6 +6,7 @@ import contentList from "../assets/JsonData/content-data.json";
 import './Pages.css'
 import ContentCard from "../components/content-card/ContentCard";
 import { useSelector } from "react-redux";
+import MyWordCloud from "../components/wordcloud/MyWordCloud";
 
 const chartOption1 = {
     series: [
@@ -194,6 +195,8 @@ const chartOption5 = {
     },
 };
 
+
+
 const TagInfo = () => {
     const ThemeReducer = useSelector(state => state.ThemeReducer.mode)
     const history = useHistory();
@@ -213,6 +216,7 @@ const TagInfo = () => {
                         <p>All Scanned Contents: <span className="text-bold tag-span">62</span></p>
                         <p>Scanned Contents In 1 Week: <span className="text-bold tag-span">20</span></p>
                     </div>
+                    <MyWordCloud/>
                 </div>
                 <div className="col-8 col-md-12">
                     {/* <div className="card-chart full-height col-12">
@@ -239,7 +243,7 @@ const TagInfo = () => {
                             type='area'
                         />
                     </div>
-                    {/* <div className="card-chart full-height col-12">
+                    <div className="card-chart full-height col-12">
                         <Chart
                             options={ThemeReducer === 'theme-mode-dark' ?
                                 { ...chartOption3.options, theme: { mode: "dark" } }
@@ -250,7 +254,7 @@ const TagInfo = () => {
                             height="150%"
                             type='bar'
                         />
-                    </div> */}
+                    </div>
                 </div >
             </div>
             <div className="card row">
