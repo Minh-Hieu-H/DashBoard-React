@@ -47,11 +47,12 @@ const TopNav = () => {
   }
   return (
     <div className="topnav">
-      {/* <div className="topnav__search">
+      <button className="btn btn-add" onClick={refreshPage}><i className="bx bx-refresh mr-0-5"></i>Reload</button>
+      <div className="topnav__search">
         <input type="text" placeholder="Search Here..." />
         <i className="bx bx-search" />
-      </div> */}
-      <button className="btn btn-add" onClick={refreshPage}><i className="bx bx-refresh mr-0-5"></i>Reload</button>
+      </div>
+
       <div className="topnav__right">
         <div className="topnav__right-item">
           <Dropdown
