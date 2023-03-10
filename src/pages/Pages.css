@@ -39,13 +39,6 @@
         text-decoration: underline;
     }
 .td-content {
-    /* display: flex;
-    align-items: center;
-    white-space: nowrap;
-    width: 100%; 
-    overflow: hidden;
-    text-overflow: ellipsis; 
-    z-index: 1;  */
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -122,4 +115,7 @@
 .btn-modal {
     margin-left: 5px;
     display: inline;
+}
+.mb-20 {
+    margin-bottom: 20px;
 }

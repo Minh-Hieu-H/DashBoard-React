@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Modal } from 'antd';
-
 import Table from "../components/table/Table";
 import tagList from "../assets/JsonData/tag-data.json";
 import './Pages.css'
@@ -17,7 +16,7 @@ const customerTableHead = [
 ];
 const Tags = () => {
   const history = useHistory();
-  const viewDetails = () => history.push('/taginfo');
+  const viewDetails = (tagid) => history.push('/tag/' + tagid);
   const renderHead = (item, index) => (
     <th key={index}>{item}</th>
   )
@@ -26,7 +25,7 @@ const Tags = () => {
     <td>{item.id}</td>
     <td>{item.name}</td>
     <td>{item.scanned}</td>
-    <td><div className="flex-center"><button onClick={viewDetails} className="btn btn-view"><i className="bx bx-search-alt mr-0-5"></i>Details</button></div></td>
+    <td><div className="flex-center"><button onClick={() => viewDetails(item.id)} className="btn btn-view"><i className="bx bx-search-alt mr-0-5"></i>Details</button></div></td>
     <td><div className="flex-center"><button className="btn btn-edit"><i className="bx bx-edit mr-0-5"></i>Edit</button></div></td>
     <td><div className="flex-center"><button className="btn btn-delete"><i className="bx bx-trash mr-0-5"></i>Delete</button></div></td>
   </tr>

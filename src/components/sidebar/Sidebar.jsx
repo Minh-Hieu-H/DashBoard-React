@@ -16,21 +16,24 @@ const SidebarItem = (props) => {
   ) 
 }
 const Sidebar = () => {
+  const tagid = window.location.pathname.split('/tag/')[1];
+  const sourceid = window.location.pathname.split('/source/')[1];
+  const videoid = window.location.pathname.split('/video/')[1];
   const locationPath = useLocation();
   const handleLocation = () => {
     switch(locationPath.pathname) {
-      case "/tags": 
-        return "/tags";
-      case "/sources": 
-        return "/sources";
-      case "/taginfo": 
-        return "/tags";
-      case "/sourceinfo": 
-        return "/sources";
-      case "/contentinfo": 
-        return "/contents";
-      case "/contents": 
-        return "/contents";
+      case "/tag": 
+        return "/tag";
+      case "/source": 
+        return "/source";
+      case ("/tag/" + tagid): 
+        return "/tag";
+      case ("/source/" + sourceid): 
+        return "/source";
+      case ("/video/" + videoid): 
+        return "/video";
+      case "/video": 
+        return "/video";
       case "/about": 
         return "/about";
       case "/settings": 
@@ -43,7 +46,7 @@ const Sidebar = () => {
   return (
     <div className='sidebar'>
       <div className='sidebar__logo'>
-        <div id="logo-img" class="light-logo"></div>
+        <div id="logo-img" className="light-logo"></div>
       </div>
       {
         sidebar_items.map((item, index)=> (

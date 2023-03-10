@@ -9,7 +9,6 @@ const Table = (props) => {
   if(props.limit !== undefined){
     let page = Math.floor(props.bodyData.length/Number(props.limit))
     pages =props.bodyData.length % Number(props.limit)=== 0 ? page : page + 1
-    console.log("Pages is", pages)
     range =[...Array(pages).keys()]
   }
   const [currentPage, setCurrentPage]= useState(0)

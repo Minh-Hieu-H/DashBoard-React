@@ -13,12 +13,12 @@ const Routing = () => {
   return (
     <Switch>
       <Route path = "/" exact component={Dashboard}/>
-      <Route path = "/tags" component={Tags}/>
-      <Route path = "/sources" component={Sources}/>
-      <Route path = "/contents" component={Contents}/>
-      <Route path = "/taginfo" component={TagInfo}/>
-      <Route path = "/sourceinfo" component={SourceInfo}/>
-      <Route path = "/contentinfo" component={ContentInfo}/>
+      <Route path = "/tag/:tagid" component={TagInfo}/>
+      <Route path = "/tag" component={Tags}/>
+      <Route path = "/source/:sourceid" component={SourceInfo}/>
+      <Route path = "/source" component={Sources}/>
+      <Route path = "/video/:videoid" component={ContentInfo}/>
+      <Route path = "/video" component={Contents}/>
     </Switch>
   )
 }

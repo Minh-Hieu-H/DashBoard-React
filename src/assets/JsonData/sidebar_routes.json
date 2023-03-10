@@ -6,17 +6,17 @@
     },
     {
         "display_name": "Tag Manager",
-        "route": "/tags",
+        "route": "/tag",
         "icon": "bx bx-at"
     },
     {
         "display_name": "Source Manager",
-        "route": "/sources",
+        "route": "/source",
         "icon": "bx bx-data"
     },
     {
-        "display_name": "Content Manager",
-        "route": "/contents",
+        "display_name": "Video Manager",
+        "route": "/video",
         "icon": "bx bx-book-content"
     },
     {

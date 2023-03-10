@@ -16,7 +16,7 @@ const curr_user = {
 const renderUserToggle = (user) => (
   <div className="topnav__right-user">
     <div className="topnav__right-user__image">
-      <img alt="User avatar" src={user.image}/>
+      <img alt="User avatar" src={user.image} />
     </div>
     <div className="topnav__right-user__name">{user.display_name}</div>
   </div>
@@ -43,14 +43,10 @@ const renderNotificationItem = (item, index) => {
 
 const TopNav = () => {
   const refreshPage = () => {
-      window.location.reload();
+    window.location.reload();
   }
   return (
     <div className="topnav">
-      {/* <div className="topnav__search">
-        <input type="text" placeholder="Search Here..." />
-        <i className="bx bx-search" />
-      </div> */}
       <button className="btn btn-add" onClick={refreshPage}><i className="bx bx-refresh mr-0-5"></i>Reload</button>
       <div className="topnav__right">
         <div className="topnav__right-item">
@@ -70,7 +66,7 @@ const TopNav = () => {
           />
         </div>
         <div className="topnav__right-item">
-          <ThemeMenu/>
+          <ThemeMenu />
         </div>
       </div>
     </div>
