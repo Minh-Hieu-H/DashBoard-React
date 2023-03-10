@@ -1,5 +1,6 @@
-    {
+[    {
         "index":0,
+        "group": "NGÀY TẢI LÊN",
         "options": [
             {"index":0,"text":"Hôm nay","choose":false},
             {"index":1,"text":"Tháng này","choose":false},
