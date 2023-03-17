@@ -20,9 +20,9 @@
         "icon": "bx bx-book-content"
     },
     {
-        "display_name": "About Us",
-        "route": "/about",
-        "icon": "bx bx-info-circle"
+        "display_name": "Event Stream",
+        "route": "/stream",
+        "icon": "bx bx-fast-forward"
     },
     {
         "display_name": "Settings",

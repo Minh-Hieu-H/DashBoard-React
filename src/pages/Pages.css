@@ -9,10 +9,10 @@
 }
 .btn-add {
     height: 80%;
-    background-color: var(--main-color);
+    background-color: var(--second-color);
 }
 .btn-add:hover {
-    background-color: var(--main-color-bold);
+    background-color: var(--main-color);
 }
 .btn-edit {
     background-color: #d98a00;
