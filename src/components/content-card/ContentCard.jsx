@@ -4,16 +4,15 @@ import './contentcard.css'
 
 const ContentCard = (props) => {
   const history = useHistory();
-  const viewContentDetails = (item) => history.push('/contentinfo');
+  const viewContentDetails = (item) => history.push('/video/' + props.id);
   return (
     <div className='content-card' >
       <div className='row'>
         <div className='content-card_icon pl-0-5'>
-            <i className={props.type == 'danger' ? 'bx bxl-youtube' : 'bx bxl-facebook-circle'}></i>
+            <i className={props.type === 'danger' ? 'bx bxl-youtube' : 'bx bxl-facebook-circle'}></i>
           </div>
         <div className='content-card_type pl-0-5'>
-          <p>
-            {props.type == 'danger' ? 'Youtube channel' : 'Facebook fanpage'}</p>
+          <p>{props.channel}</p>
         </div>
         <div className='content-card_id'>
           <p className="mb-0-5">{props.id}</p>
@@ -21,7 +20,7 @@ const ContentCard = (props) => {
       </div>
       <div className="row">
         <div className='content-card_content'>
-            <p>{props.content}</p>
+            <p>{props.title}</p>
         </div>
       </div>
       <div className="row justify-div">

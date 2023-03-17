@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
@@ -8,49 +7,34 @@ import StatusCard from "../components/status-card/StatusCard";
 import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 import statusCards from "../assets/JsonData/status-card-data.json";
+import tagList from "../assets/JsonData/tag-data.json";
+import sourceList from "../assets/JsonData/source-data.json";
 
 const chartOption = {
-  series: [
-    {
-      name: "Youtube Source",
-      data: [12, 16, 4, 8, 21, 3, 2],
-    },
-    {
-      name: "Facebook Source",
-      data: [8, 6, 2, 6, 6, 1, 0],
-    },
-  ], // chart data
+  series: [],
   options: {
-    color: ["#ff0000", "#2d86ff"],
-    chart: {
-      background: "transparent",
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: "smooth",
-    },
-    xaxis: {
-      categories: [
-        "Mon",
-        "Tue",
-        "Wed",
-        "Thu",
-        "Fri",
-        "Sat",
-        "Sun",
-      ],
-    },
-    legend: {
-      position: "top",
-    },
-    grid: {
-      show: false,
-    },
-  }, // chart options
+      chart: {
+          type: 'polarArea',
+      },
+      stroke: {
+          colors: ['#fff']
+      },
+      fill: {
+          opacity: 0.8
+      },
+      responsive: [{
+          breakpoint: 480,
+          options: {
+              chart: {
+                  width: 200
+              },
+              legend: {
+                  position: 'bottom'
+              }
+          }
+      }]
+  },
 };
-
 const topCustomers = {
   head: ["Name", "Scanned Contents"],
   body: [
@@ -76,16 +60,13 @@ const topCustomers = {
     },
   ],
 };
-
 const renderCustomerHead = (item, index) => <th key={index}>{item}</th>;
-
 const renderCustomerBody = (item, index) => ( 
   <tr key={index}>
     <td>{item.name}</td>
     <td>{item.scanned}</td>
   </tr>
 )
-
 const latestOrders = {
   header: ["name", "scanned contents", "type", "URL"],
   body: [
@@ -121,9 +102,7 @@ const latestOrders = {
     },
   ],
 };
-
 const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
-
 const renderOrderBody = (item, index) => (
   <tr key="index">
     <td>{item.name}</td>
@@ -134,24 +113,70 @@ const renderOrderBody = (item, index) => (
 );
 
 const Dashboard = () => {
-  const ThemeReducer = useSelector(state => state.ThemeReducer.mode)
+  const ThemeReducer = useSelector(state => state.ThemeReducer.mode);
+  const [tagScanneds, setTagScanneds] = useState([]);
+  const [tagNames, setTagNames] = useState([]);
+  const [sourceScanneds, setSourceScanneds] = useState([]);
+  const [sourceNames, setSourceNames] = useState([]);
+  useEffect(() => {
+        let tagscanned_list = [];
+      let tagname_list = [];
+      let sourcescanned_list = [];
+      let sourcename_list = [];
+      tagList.map((tag, index) => {
+        tagscanned_list = [...tagscanned_list,tag["scanned"]];
+        tagname_list = [...tagname_list, tag["name"]];
+      });
+      sourceList.map((source, index) => {
+        sourcescanned_list = [...sourcescanned_list,source["scanned"]];
+        sourcename_list = [...sourcename_list, source["name"]];
+      });
+      console.log(tagscanned_list)
+      setTagScanneds(tagscanned_list);
+      setTagNames(tagname_list);
+      setSourceScanneds(sourcescanned_list);
+      setSourceNames(sourcename_list);
+  }, []);
+
   return (
     <div>
       <p style={{"fontSize":"24px"}}>Active Sources</p>
       <div className="header">
       </div>
       <div className="row">
-        {statusCards.map((item, index) => (
-          <div className="col-3 col-md-6 col-sm-12" key={index}>
-            <StatusCard
-              icon={item.icon}
-              title={item.title}
-              count={item.count}
-              new={item.new}
-            />
-          </div>
-        ))}
+          {statusCards.map((item, index) => (
+            <div className="col-3 col-md-6 col-sm-12" key={index}>
+              <StatusCard
+                icon={item.icon}
+                title={item.title}
+                count={item.count}
+                new={item.new}
+              />
+            </div>
+          ))}
+        
       </div>
+      <div className="row">
+      <div className="col-6 col-md-12">
+          <div className="card full-height">
+              <Chart
+                  options={ {labels:tagNames,  ...chartOption.options}}
+                  series={tagScanneds}
+                  type='polarArea'
+              />
+          </div>
+        </div>
+        <div className="col-6 col-md-12">
+          <div className="card full-height">
+            {console.log(sourceScanneds)}
+              <Chart
+                  options={ {labels:sourceNames,  ...chartOption.options}}
+                  series={sourceScanneds}
+                  type='polarArea'
+              />
+          </div>
+        </div>
+        </div>
       <div className="row">
         <div className="col-4 col-md-12">
           <div className="card">
@@ -189,20 +214,6 @@ const Dashboard = () => {
               <Link to="/">View all</Link>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="card card-chart full-height col-12">
-          <Chart
-            options={ThemeReducer==='theme-mode-dark'?
-            {...chartOption.options, theme: {mode:"dark"}}
-            : {
-              ...chartOption.options, theme: {mode:"light"}
-            }}
-            series={chartOption.series}
-            type="line"
-            height="200%"
-          />
         </div>
       </div>
     </div>

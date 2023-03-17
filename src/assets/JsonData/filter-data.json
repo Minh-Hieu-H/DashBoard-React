@@ -1,0 +1,29 @@
+[    {
+        "index":0,
+        "group": "NGÀY TẢI LÊN",
+        "options": [
+            {"index":0,"text":"Hôm nay","choose":false},
+            {"index":1,"text":"Tháng này","choose":false},
+            {"index":2,"text":"Năm này","choose":false}
+        ]
+    },
+    {
+        "index":1,
+        "group": "SẮP XẾP THEO",
+        "options": [
+            {"index":0,"text":"Mức độ liên quan","choose":false},
+            {"index":1,"text":"Ngày tải lên","choose":false},
+            {"index":2,"text":"Lượt xem","choose":false},
+            {"index":3,"text":"Lượt tương tác","choose":false}
+        ]
+    },
+    {
+        "index":2,
+        "group": "XẾP LOẠI",
+        "options": [
+            {"index":0,"text":"Trung tính","choose":false},
+            {"index":1,"text":"Tích cực","choose":false},
+            {"index":2,"text":"Tiêu cực","choose":false}
+        ]
+    }
+]
