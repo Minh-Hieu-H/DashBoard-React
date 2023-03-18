@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import Routing from "../Routing";
 import Sidebar from "../sidebar/Sidebar";
 import TopNav from "../topnav/TopNav";
+import Routing from "../Routing";
 import exportDefault from "../redux/actions/ThemeActions";
 
 import "./layout.css";
 
 const Layout = () => {
   const ThemeReducer = useSelector((state) => state.ThemeReducer);
+
   const dispatch = useDispatch();
+
   useEffect(() => {
     const themeClass = localStorage.getItem("themeMode");
     const colorClass = localStorage.getItem("colorMode");

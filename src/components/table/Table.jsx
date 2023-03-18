@@ -1,23 +1,34 @@
-import React,{useState} from "react";
-import "./table.css";
-const Table = (props) => {
+import { useState } from "react";
 
-  const initDataShow =props.limit &&props.bodyData ?props.bodyData.slice(0,Number(props.limit)): props.bodyData
-  const [dataShow, setDataShow]= useState(initDataShow)
-  let pages=1 
-  let range = []
-  if(props.limit !== undefined){
-    let page = Math.floor(props.bodyData.length/Number(props.limit))
-    pages =props.bodyData.length % Number(props.limit)=== 0 ? page : page + 1
-    range =[...Array(pages).keys()]
+import "./table.css";
+
+const Table = (props) => {
+  const initDataShow =
+    props.limit && props.bodyData
+      ? props.bodyData.slice(0, Number(props.limit))
+      : props.bodyData;
+
+  const [dataShow, setDataShow] = useState(initDataShow);
+
+  let pages = 1;
+
+  let range = [];
+
+  if (props.limit !== undefined) {
+    let page = Math.floor(props.bodyData.length / Number(props.limit));
+    pages = props.bodyData.length % Number(props.limit) === 0 ? page : page + 1;
+    range = [...Array(pages).keys()];
   }
-  const [currentPage, setCurrentPage]= useState(0)
-  const showCurrentPage = (page)=> {
-      const start = page * Number(props.limit)
-      const end = start + Number(props.limit)
-      setDataShow(props.bodyData.slice(start,end))
-      setCurrentPage(page)
-  }
+
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const showCurrentPage = (page) => {
+    const start = page * Number(props.limit);
+    const end = start + Number(props.limit);
+    setDataShow(props.bodyData.slice(start, end));
+    setCurrentPage(page);
+  };
+
   return (
     <div className="table-wrapper">
       <table>
@@ -37,13 +48,15 @@ const Table = (props) => {
         ) : null}
       </table>
       <div className="table__pagination">
-        {
-          range.map((item,index)=>(
-            <div key= {index} className={`table__pagination-item`} onClick= {()=>showCurrentPage(index)}>
-              {item+1}
-            </div>
-          ))
-        }
+        {range.map((item, index) => (
+          <div
+            key={index}
+            className={`table__pagination-item`}
+            onClick={() => showCurrentPage(index)}
+          >
+            {item + 1}
+          </div>
+        ))}
       </div>
     </div>
   );

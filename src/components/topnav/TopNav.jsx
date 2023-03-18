@@ -1,11 +1,11 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 import Dropdown from "../dropdown/Dropdown";
-import notifications from "../../assets/JsonData/notification.json";
+import ThemeMenu from "../thememenu/ThemeMenu";
+
 import user_image from "../../assets/images/hieu.jpg";
 import user_menu from "../../assets/JsonData/user_menus.json";
-import ThemeMenu from "../thememenu/ThemeMenu";
+import notifications from "../../assets/JsonData/notification.json";
 import "./topnav.css";
 
 const curr_user = {
@@ -32,7 +32,6 @@ const renderUserMenu = (item, index) => (
 );
 
 const renderNotificationItem = (item, index) => {
-
   return (
     <div className="notification-item" key={index}>
       <i className={item.icon}></i>
@@ -44,10 +43,13 @@ const renderNotificationItem = (item, index) => {
 const TopNav = () => {
   const refreshPage = () => {
     window.location.reload();
-  }
+  };
+  
   return (
     <div className="topnav">
-      <button className="btn btn-add" onClick={refreshPage}><i className="bx bx-refresh mr-0-5"></i>Reload</button>
+      <button className="btn btn-add" onClick={refreshPage}>
+        <i className="bx bx-refresh mr-0-5"></i>Reload
+      </button>
       <div className="topnav__right">
         <div className="topnav__right-item">
           <Dropdown

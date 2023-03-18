@@ -1,40 +1,40 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Chart from "react-apexcharts";
-import { useSelector } from "react-redux";
 
 import StatusCard from "../components/status-card/StatusCard";
 import Table from "../components/table/Table";
-import Badge from "../components/badge/Badge";
+
 import statusCards from "../assets/JsonData/status-card-data.json";
-import tagList from "../assets/JsonData/tag-data.json";
-import sourceList from "../assets/JsonData/source-data.json";
+import last7Tag from "../assets/JsonData/last-7-tag.json";
+import last7Reactive from "../assets/JsonData/last-7-reactive.json";
+import Button from "../components/button/Button";
 
 const chartOption = {
-  series: [],
   options: {
-      chart: {
-          type: 'polarArea',
+    colors: "#ff0000",
+    xaxis: {
+      labels: {
+        style: {
+          colors: "#fff",
+        },
       },
-      stroke: {
-          colors: ['#fff']
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: "#fff",
+        },
       },
-      fill: {
-          opacity: 0.8
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 10,
       },
-      responsive: [{
-          breakpoint: 480,
-          options: {
-              chart: {
-                  width: 200
-              },
-              legend: {
-                  position: 'bottom'
-              }
-          }
-      }]
+    },
   },
 };
+
 const topCustomers = {
   head: ["Name", "Scanned Contents"],
   body: [
@@ -60,128 +60,120 @@ const topCustomers = {
     },
   ],
 };
+
 const renderCustomerHead = (item, index) => <th key={index}>{item}</th>;
-const renderCustomerBody = (item, index) => ( 
+
+const renderCustomerBody = (item, index) => (
   <tr key={index}>
     <td>{item.name}</td>
     <td>{item.scanned}</td>
   </tr>
-)
+);
+
 const latestOrders = {
-  header: ["name", "scanned contents", "type", "URL"],
+  header: ["name", "scanned contents", "URL"],
   body: [
     {
       name: "VTV24",
       scanned: "7.101",
-      type: "danger",
       url: "https://www.youtube.com/c/vtv24",
     },
     {
       name: "Việt Tân",
       scanned: "2.896",
-      type: "danger",
       url: "https://www.youtube.com/c/VietTan",
     },
     {
       name: "RFA Tiếng Việt",
       scanned: "1.196",
-      type: "danger",
       url: "https://www.youtube.com/user/RFAVietnamese",
     },
     {
       name: "BBC News Tiếng Việt",
       scanned: "1.196",
-      type: "danger",
       url: "https://www.youtube.com/c/bbctiengviet",
     },
     {
       name: "TRÍ TUỆ TỎA SÁNG",
       scanned: "652",
-      type: "primary",
       url: "https://www.facebook.com/hocvienkythuat",
     },
   ],
 };
+
 const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
+
 const renderOrderBody = (item, index) => (
   <tr key="index">
     <td>{item.name}</td>
     <td>{item.scanned}</td>
-    <td><div className="flex-div" style={{"justifyContent":"center"}}><Badge className="text-bold" type={item.type} clickable={"none"} content={item.type === "danger" ? "Youtube channel" : "Facebook fanpage"}/></div></td>
-    <td><a href={item.url}>{item.url}</a></td>
+    <td>
+      <a href={item.url}>{item.url}</a>
+    </td>
   </tr>
 );
 
 const Dashboard = () => {
-  const ThemeReducer = useSelector(state => state.ThemeReducer.mode);
   const [tagScanneds, setTagScanneds] = useState([]);
+
   const [tagNames, setTagNames] = useState([]);
+
   const [sourceScanneds, setSourceScanneds] = useState([]);
+
   const [sourceNames, setSourceNames] = useState([]);
+
   useEffect(() => {
-        let tagscanned_list = [];
-      let tagname_list = [];
-      let sourcescanned_list = [];
-      let sourcename_list = [];
-      tagList.map((tag, index) => {
-        tagscanned_list = [...tagscanned_list,tag["scanned"]];
-        tagname_list = [...tagname_list, tag["name"]];
-      });
-      sourceList.map((source, index) => {
-        sourcescanned_list = [...sourcescanned_list,source["scanned"]];
-        sourcename_list = [...sourcename_list, source["name"]];
-      });
-      console.log(tagscanned_list)
-      setTagScanneds(tagscanned_list);
-      setTagNames(tagname_list);
-      setSourceScanneds(sourcescanned_list);
-      setSourceNames(sourcename_list);
+    let tagscanned_list = [];
+    let tagname_list = [];
+    let sourcescanned_list = [];
+    let sourcename_list = [];
+    last7Tag.map((tag, index) => {
+      tagscanned_list = [...tagscanned_list, tag["count"]];
+      tagname_list = [...tagname_list, tag["weekday"]];
+    });
+    last7Reactive.map((source, index) => {
+      sourcescanned_list = [...sourcescanned_list, source["count"]];
+      sourcename_list = [...sourcename_list, source["weekday"]];
+    });
+    setTagScanneds(tagscanned_list);
+    setTagNames(tagname_list);
+    setSourceScanneds(sourcescanned_list);
+    setSourceNames(sourcename_list);
   }, []);
 
   return (
     <div>
-      <p style={{"fontSize":"24px"}}>Active Sources</p>
-      <div className="header">
-      </div>
+      <p style={{ fontSize: "24px" }}>Active Channels</p>
       <div className="row">
-          {statusCards.map((item, index) => (
-            <div className="col-3 col-md-6 col-sm-12" key={index}>
-              <StatusCard
-                icon={item.icon}
-                title={item.title}
-                count={item.count}
-                new={item.new}
-              />
-            </div>
-          ))}
-        
-      </div>
-      <div className="row">
-      <div className="col-6 col-md-12">
-          <div className="card full-height">
-              <Chart
-                  options={ {labels:tagNames,  ...chartOption.options}}
-                  series={tagScanneds}
-                  type='polarArea'
-              />
+        {statusCards.map((item, index) => (
+          <div className="col-3 col-md-6 col-sm-12" key={index}>
+            <StatusCard
+              icon={item.icon}
+              title={item.title}
+              count={item.count}
+              new={item.new}
+            />
           </div>
-        </div>
+        ))}
+      </div>
+
+      <p style={{ fontSize: "24px" }}>Tag Statistics</p>
+      <div
+        className="row"
+        style={{ alignItems: "stretch", marginBottom: "30px" }}
+      >
         <div className="col-6 col-md-12">
-          <div className="card full-height">
-            {console.log(sourceScanneds)}
-              <Chart
-                  options={ {labels:sourceNames,  ...chartOption.options}}
-                  series={sourceScanneds}
-                  type='polarArea'
-              />
-          </div>
-        </div>
-        </div>
-      <div className="row">
-        <div className="col-4 col-md-12">
-          <div className="card">
+          <div
+            className="card"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: "100%",
+            }}
+          >
             <div className="card__header">
-              <p style={{"fontSize":"16px"}}>Top Tags</p>
+              <p>Top Tags</p>
             </div>
             <div className="card__body">
               <Table
@@ -192,15 +184,51 @@ const Dashboard = () => {
               />
             </div>
             <div className="card__footer">
-              <Link to="/">View all</Link>
+              <Button>
+                <Link to="/tag">View All</Link>
+              </Button>
             </div>
           </div>
         </div>
-        <div className="col-8 col-md-12">
-          <div className="card">
+        <div className="col-6 col-md-12">
+          <div
+            className="card"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: "100%",
+            }}
+          >
             <div className="card__header">
-              <p style={{"fontSize":"16px"}}>Top Sources</p>
+              <p>Captured Events on Last 7 days</p>
+            </div>
+            <Chart
+              options={{ labels: tagNames, ...chartOption.options }}
+              series={[{ name: "Videos by tag", data: tagScanneds }]}
+              type="bar"
+            />
+          </div>
+        </div>
+      </div>
 
+      <p style={{ fontSize: "24px" }}>Source Statistics</p>
+      <div
+        className="row"
+        style={{ alignItems: "stretch", marginBottom: "30px" }}
+      >
+        <div className="col-6 col-md-12">
+          <div
+            className="card"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: "100%",
+            }}
+          >
+            <div className="card__header">
+              <p>Top Sources</p>
             </div>
             <div className="card__body">
               <Table
@@ -211,8 +239,32 @@ const Dashboard = () => {
               />
             </div>
             <div className="card__footer">
-              <Link to="/">View all</Link>
+              <Button>
+                <Link to="/source">View All</Link>
+              </Button>
             </div>
+          </div>
+        </div>
+        <div className="col-6 col-md-12">
+          <div
+            className="card"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: "100%",
+            }}
+          >
+            <div className="card__header">
+              <p>Reactive on Last 7 days</p>
+            </div>
+            <Chart
+              options={{ labels: sourceNames, ...chartOption.options }}
+              series={[
+                { name: "Reactive Bar", data: sourceScanneds, type: "bar" },
+              ]}
+              type="bar"
+            />
           </div>
         </div>
       </div>

@@ -95,7 +95,6 @@ const ThemeMenu = () => {
     setcurrColor(color.id);
     localStorage.setItem("colorMode", color.class);
     dispatch(exportDefault.setColor(color.class));
-    console.log(currColor)
   };
 
   const ThemeReducer = useSelector((state) => state.ThemeReducer);
@@ -107,7 +106,6 @@ const ThemeMenu = () => {
     const colorClass = color__settings.find(
       (e) => e.class === localStorage.getItem("colorMode", ThemeReducer.color)
     );
-    console.log(colorClass)
     if (themeClass !== undefined) setcurrMode(themeClass.id);
     if (colorClass !== undefined) setColor(colorClass);
   }, []);
