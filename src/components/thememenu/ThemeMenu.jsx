@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect} from 'react'
 import './thememenu.css'
-import exportDefault from '../redux/actions/ThemeActions'
+import exportDefault from '../../redux/actions/ThemeActions'
 import { useDispatch } from 'react-redux'
 const mode_settings = [
     {

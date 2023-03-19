@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import Routing from '../Routing'
 import Sidebar from '../sidebar/Sidebar'
 import TopNav from '../topnav/TopNav'
-import exportDefault from '../redux/actions/ThemeActions'
+import exportDefault from '../../redux/actions/ThemeActions.js'
 import './layout.css'
 
 const Layout = () => {
-  const ThemeReducer =  useSelector(state => state.ThemeReducer);
+  const ThemeReducer =  useSelector(state => state.theme);
   const dispatch = useDispatch();
   useEffect(() => {
     const themeClass = localStorage.getItem('thememode', 'theme-mode-light')

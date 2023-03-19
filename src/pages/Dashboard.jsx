@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Chart from "react-apexcharts";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import {getListVideo} from "../redux/actions/VideoAction"
 import StatusCard from "../components/status-card/StatusCard";
 import Table from "../components/table/Table";
 import Badge from "../components/badge/Badge";
 import statusCards from "../assets/JsonData/status-card-data.json";
 import tagList from "../assets/JsonData/tag-data.json";
 import sourceList from "../assets/JsonData/source-data.json";
+
 
 const chartOption = {
   series: [],
@@ -113,13 +114,17 @@ const renderOrderBody = (item, index) => (
 );
 
 const Dashboard = () => {
-  const ThemeReducer = useSelector(state => state.ThemeReducer.mode);
+  const dispatch = useDispatch();
+  const ThemeReducer = useSelector(state => state.theme.mode);
+  const videoList = useSelector((state)=> state.videoList)
+  const {loading,videos,error} = videoList
+  console.log(videoList)
   const [tagScanneds, setTagScanneds] = useState([]);
   const [tagNames, setTagNames] = useState([]);
   const [sourceScanneds, setSourceScanneds] = useState([]);
   const [sourceNames, setSourceNames] = useState([]);
   useEffect(() => {
-        let tagscanned_list = [];
+      let tagscanned_list = [];
       let tagname_list = [];
       let sourcescanned_list = [];
       let sourcename_list = [];
@@ -131,12 +136,12 @@ const Dashboard = () => {
         sourcescanned_list = [...sourcescanned_list,source["scanned"]];
         sourcename_list = [...sourcename_list, source["name"]];
       });
-      console.log(tagscanned_list)
       setTagScanneds(tagscanned_list);
       setTagNames(tagname_list);
       setSourceScanneds(sourcescanned_list);
       setSourceNames(sourcename_list);
-  }, []);
+      dispatch(getListVideo())
+  }, [dispatch]);
 
   return (
     <div>
