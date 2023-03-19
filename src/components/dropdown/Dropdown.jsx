@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
+
 import "./dropdown.css";
 
 const clickOutsideHandler = (content_ref, toggle_ref) => {
@@ -7,13 +8,14 @@ const clickOutsideHandler = (content_ref, toggle_ref) => {
     if (toggle_ref.current && toggle_ref.current.contains(e.target)) {
       content_ref.current.classList.toggle("active");
     } else {
-        //user click outside toggle and content
+      //user click outside toggle and content
       if (content_ref.current && !content_ref.current.contains(e.target)) {
         content_ref.current.classList.remove("active");
       }
     }
   });
 };
+
 const Dropdown = (props) => {
   const content_ref = useRef(null);
   const toggle_ref = useRef(null);

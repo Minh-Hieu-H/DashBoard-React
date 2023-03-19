@@ -11,14 +11,19 @@ import './assets/css/theme.css'
 import './assets/css/index.css'
 import store from './redux/store';
 
+// Page test Data Redux
+import Flowdata from './testdata/flowData';
+
 document.title = 'Reconnaissance Tool'
 
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <Layout />
-    </React.StrictMode>
-  </Provider>,
-  document.getElementById('root')
+  <React.StrictMode>
+    <Provider store={store}>
+      <React.StrictMode>
+        {/* <Layout /> */}
+        <Flowdata/>
+      </React.StrictMode>
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
-

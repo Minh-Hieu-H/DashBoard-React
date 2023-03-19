@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ContentCard from '../content-card/ContentCard';
 import contentList from "../../assets/JsonData/content-data.json";
-import { Button } from 'antd';
-
+import Button from '../button/Button';
+// import { Button } from 'antd';
 
 const VideoGrid = props => {
 
@@ -45,7 +45,7 @@ const VideoGrid = props => {
             </div>
             {
                 page < totalPage ? (
-                    <div className="movie-grid__loadmore">
+                    <div className="movie-grid__loadmore card__footer">
                         <Button className=" btn" onClick={loadMore}>Load more</Button>
                     </div>
                 ) : null

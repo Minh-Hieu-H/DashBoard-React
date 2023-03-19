@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import Routing from '../Routing'
 import Sidebar from '../sidebar/Sidebar'
@@ -11,30 +11,31 @@ import './layout.css'
 const Layout = () => {
   const ThemeReducer =  useSelector(state => state.theme);
   const dispatch = useDispatch();
-  useEffect(() => {
-    const themeClass = localStorage.getItem('thememode', 'theme-mode-light')
-    const colorClass = localStorage.getItem('colorMode', 'color-mode-light')
 
-    dispatch(exportDefault.setMode(themeClass))
-    dispatch(exportDefault.setColor(colorClass))
-    }, [dispatch]
-  );
-  
+  useEffect(() => {
+    const themeClass = localStorage.getItem("themeMode");
+    const colorClass = localStorage.getItem("colorMode");
+    dispatch(exportDefault.setMode(themeClass));
+    dispatch(exportDefault.setColor(colorClass));
+  }, [dispatch]);
+
   return (
     <BrowserRouter>
-      <Route render={(props) => (
-        <div className={`layout ${ThemeReducer.mode} ${ThemeReducer.color}`}>
-          <Sidebar {...props}/>
-          <div className='layout__content'>
-            <TopNav/>
-            <div className='layout__content-main'>
-              <Routing/>
+      <Route
+        render={(props) => (
+          <div className={`layout ${ThemeReducer.mode} ${ThemeReducer.color}`}>
+            <Sidebar {...props} />
+            <div className="layout__content">
+              <TopNav />
+              <div className="layout__content-main">
+                <Routing />
+              </div>
             </div>
           </div>
-        </div>
-      )} />
+        )}
+      />
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

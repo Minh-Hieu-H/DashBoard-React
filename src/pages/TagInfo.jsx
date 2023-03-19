@@ -102,7 +102,7 @@ const chartOption4 = {
             width: 380,
             type: 'pie',
         },
-        labels: ['Tích cực', 'Tiêu cực', 'Trung hòa'],
+        labels: ['Tích cực', 'Tiêu cực', 'Trung tính'],
         responsive: [{
             breakpoint: 480,
             options: {
@@ -126,7 +126,7 @@ const TagInfo = () => {
         }
         getDetail();
     }, []);
-    const ThemeReducer = useSelector(state => state.ThemeReducer.mode)
+    const ThemeReducer = useSelector(state => state.theme.mode)
     return (
         <div>
             <div className="justify-div">
