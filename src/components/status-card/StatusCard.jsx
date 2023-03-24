@@ -1,11 +1,16 @@
+import { useHistory } from "react-router-dom";
 import "./statuscard.css";
 
 const StatusCard = (props) => {
+  const history = useHistory();
+
+  const viewDetails = (id) => history.push("/source/" + id);
+
   return (
-    <div className="status-card">
+    <div className="status-card" onClick={() => viewDetails(props.id)}>
       <div className="row pr-0-5">
         <div className="status-card_icon">
-          <i className={props.icon}></i>
+          <i className="bx bxl-youtube"></i>
         </div>
         <div className="status-card_title cut-text">
           <p>{props.title}</p>
@@ -14,11 +19,11 @@ const StatusCard = (props) => {
       <div className="row">
         <div className="status-card_info">
           <div className="justify-div">
-            <p className="mb-0-5">Scanned contents:</p>
+            <p className="mb-0-5">Scanned videos:</p>
             <span>{props.count}</span>
           </div>
           <div className="justify-div">
-            <p className="mb-0-5">New contents:</p>
+            <p className="mb-0-5">Last 7 days:</p>
             <span>{props.new}</span>
           </div>
         </div>

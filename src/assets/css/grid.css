@@ -1,9 +1,9 @@
 .row {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -15px;
+    align-items: center;
+    margin: 0 !important;
 }
-
 [class*="col-"] {
     padding: 0 15px;
 }

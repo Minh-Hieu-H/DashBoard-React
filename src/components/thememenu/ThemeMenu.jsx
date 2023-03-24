@@ -1,7 +1,7 @@
-import React, {useRef, useState, useEffect} from 'react'
-import './thememenu.css'
-import exportDefault from '../../redux/actions/ThemeActions'
-import { useDispatch,useSelector } from 'react-redux'
+import React, { useRef, useState, useEffect } from "react";
+import "./thememenu.css";
+import exportDefault from "../../redux/actions/ThemeActions";
+import { useDispatch, useSelector } from "react-redux";
 const mode_settings = [
   {
     id: "light",
@@ -65,7 +65,6 @@ const clickOutsideRef = (content_ref, toggle_ref) => {
 };
 
 const ThemeMenu = () => {
-
   const menu_ref = useRef(null);
 
   const menu_toggle_ref = useRef(null);

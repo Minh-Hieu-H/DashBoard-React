@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import "./search.css"
 
-const Search = ({ search, handleChangeKey }) => {
+const Search = ({ search, handleChangeKey, placeholder }) => {
     const [searchKey, setSearchKey] = useState(search);
     const handleChange = (event) => {
         const value = event.target.value;
@@ -12,7 +12,7 @@ const Search = ({ search, handleChangeKey }) => {
 
     return (
         <div className="search">
-            <input type="text" value={searchKey} onChange={handleChange} placeholder="Search Here..." />
+            <input type="text" value={searchKey} onChange={handleChange} placeholder={placeholder} />
             <i className="bx bx-search" />
         </div>
     )

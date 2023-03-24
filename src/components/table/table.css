@@ -52,3 +52,14 @@ tbody > tr:hover {
   color: var(--txt-white);
   background-color: var(--second-color);
 }
+.table__pagination-item-selected {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: var(--txt-white);
+  background-color: var(--second-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
