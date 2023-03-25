@@ -20,8 +20,8 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <React.StrictMode>
-        {/* <Layout /> */}
-        <Flowdata/>
+        <Layout />
+        {/* <Flowdata/> */}
       </React.StrictMode>
     </Provider>
   </React.StrictMode>,
