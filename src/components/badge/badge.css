@@ -6,20 +6,13 @@
     /* min-width: 200px; */
 }
 .badge-danger {
-    background-color: var(--main-color-red);
+    background-color: #FF4560;
 }
 
 .badge-success {
-    background-color: var(--main-color-green);
+    background-color: #00E396;
 }
 
 .badge-primary {
-    background-color: var(--main-color-blue);
-}
-
-.badge-warning {
-    background-color: var(--main-color-orange);
-}
-.badge-main {
-    background-color: var(--main-color);
+    background-color: #008FFB;
 }

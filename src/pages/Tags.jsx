@@ -11,7 +11,7 @@ import "antd/dist/antd.css";
 const customerTableHead = [
   "#",
   "name",
-  "scanned contents",
+  "scanned videos",
   "view details",
   "delete",
 ];
@@ -37,39 +37,66 @@ const Tags = () => {
       </td>
       <td>
         <div className="flex-center">
-          <button className="btn btn-delete">
-            <i className="bx bx-trash mr-0-5"></i>Delete
+          <button
+            onClick={() => showModalDelete(item.id)}
+            className="btn btn-delete"
+          >
+            <i className="bx bx-trash mr-0-5"></i>Unfollow
           </button>
         </div>
       </td>
     </tr>
   );
 
-  const [open, setOpen] = useState(false);
+  const [openAdd, setOpenAdd] = useState(false);
+
+  const [openDelete, setOpenDelete] = useState(false);
 
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-  const showModal = () => {
-    setOpen(true);
+  const showModalAdd = () => {
+    setOpenAdd(true);
   };
 
-  const handleOk = () => {
+  const handleOkAdd = () => {
     setConfirmLoading(true);
     setTimeout(() => {
-      setOpen(false);
+      setOpenAdd(false);
       setConfirmLoading(false);
     }, 2000);
   };
 
-  const handleCancel = () => {
-    setOpen(false);
+  const handleCancelAdd = () => {
+    setOpenAdd(false);
   };
 
+  const showModalDelete = (tagId) => {
+    setOpenDelete(true);
+  };
+
+  const handleOkDelete = () => {
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setOpenDelete(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+
+  const handleCancelDelete = () => {
+    setOpenDelete(false);
+  };
+
+  const currentMainColorVar =
+    "var(--main-color-" + localStorage.getItem("colorMode").slice(12) + ")";
+
+  const currentSecondColorVar =
+    "var(--second-color-" + localStorage.getItem("colorMode").slice(12) + ")";
+
   return (
-    <>
+    <div>
       <div className="justify-div">
-        <p style={{ fontSize: "24px" }}>Tag Manager</p>
-        <button className="btn btn-add" onClick={showModal}>
+        <p className="section__header">Tag Manager</p>
+        <button className="btn btn-add" onClick={showModalAdd}>
           <i className="bx bx-plus mr-0-5"></i>Add Tag
         </button>
       </div>
@@ -91,16 +118,23 @@ const Tags = () => {
       <Modal
         title="Add a new tag"
         centered
-        open={open}
-        onOk={handleOk}
+        open={openAdd}
+        onOk={handleOkAdd}
         confirmLoading={confirmLoading}
-        onCancel={handleCancel}
+        onCancel={handleCancelAdd}
         okText="Add"
         okButtonProps={{
-          style: { fontSize: "16px", padding: "0 10px", borderRadius: "5px" },
+          className: "ok-btn",
+          style: {
+            backgroundColor: currentSecondColorVar,
+          },
+          onMouseEnter: (e) =>
+            (e.target.style.backgroundColor = currentMainColorVar),
+          onMouseLeave: (e) =>
+            (e.target.style.backgroundColor = currentSecondColorVar),
         }}
         cancelButtonProps={{
-          style: { fontSize: "16px", padding: "0 10px", borderRadius: "5px" },
+          className: "cancel-btn",
         }}
       >
         <div className="modalBody">
@@ -108,7 +142,30 @@ const Tags = () => {
           <input className="modalInput" type="text"></input>
         </div>
       </Modal>
-    </>
+      <Modal
+        centered
+        open={openDelete}
+        onOk={handleOkDelete}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancelDelete}
+        okText="Unfollow"
+        okButtonProps={{
+          className: "ok-btn",
+          style: {
+            backgroundColor: "#959595",
+          },
+          onMouseEnter: (e) => (e.target.style.backgroundColor = "#6b6a6a"),
+          onMouseLeave: (e) => (e.target.style.backgroundColor = "#959595"),
+        }}
+        cancelButtonProps={{
+          className: "cancel-btn",
+        }}
+      >
+        <div className="modalBody">
+          <p>Are you sure you want to unfollow this tag?</p>
+        </div>
+      </Modal>
+    </div>
   );
 };
 

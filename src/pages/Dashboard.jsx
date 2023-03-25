@@ -1,42 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Chart from "react-apexcharts";
+
 import StatusCard from "../components/status-card/StatusCard";
 import Table from "../components/table/Table";
+import Button from "../components/button/Button";
 
 import statusCards from "../assets/JsonData/status-card-data.json";
 import last7Tag from "../assets/JsonData/last-7-tag.json";
 import last7Reactive from "../assets/JsonData/last-7-reactive.json";
-import Button from "../components/button/Button";
+import "./Pages.css";
 
-
-const chartOption = {
-  options: {
-    colors: "#ff0000",
-    xaxis: {
-      labels: {
-        style: {
-          colors: "#fff",
-        },
-      },
-    },
-    yaxis: {
-      labels: {
-        style: {
-          colors: "#fff",
-        },
-      },
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 10,
-      },
-    },
-  },
-};
-
-const topCustomers = {
-  head: ["Name", "Scanned Contents"],
+const topTags = {
+  head: ["tag name", "scanned videos"],
   body: [
     {
       name: "Covid",
@@ -61,17 +37,17 @@ const topCustomers = {
   ],
 };
 
-const renderCustomerHead = (item, index) => <th key={index}>{item}</th>;
+const renderTagHead = (item, index) => <th key={index}>{item}</th>;
 
-const renderCustomerBody = (item, index) => (
+const renderTagBody = (item, index) => (
   <tr key={index}>
     <td>{item.name}</td>
     <td>{item.scanned}</td>
   </tr>
 );
 
-const latestOrders = {
-  header: ["name", "scanned contents", "URL"],
+const topSources = {
+  header: ["source name", "scanned videos", "source link"],
   body: [
     {
       name: "VTV24",
@@ -101,10 +77,10 @@ const latestOrders = {
   ],
 };
 
-const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
+const renderSourceHead = (item, index) => <th key={index}>{item}</th>;
 
-const renderOrderBody = (item, index) => (
-  <tr key="index">
+const renderSourceBody = (item, index) => (
+  <tr key={index}>
     <td>{item.name}</td>
     <td>{item.scanned}</td>
     <td>
@@ -114,25 +90,24 @@ const renderOrderBody = (item, index) => (
 );
 
 const Dashboard = () => {
-  // defined state
   const [tagScanneds, setTagScanneds] = useState([]);
 
   const [tagNames, setTagNames] = useState([]);
 
-  const [sourceScanneds, setSourceScanneds] = useState([]);
-
   const [sourceNames, setSourceNames] = useState([]);
+
+  const [sourceScanneds, setSourceScanneds] = useState([]);
 
   useEffect(() => {
     let tagscanned_list = [];
     let tagname_list = [];
     let sourcescanned_list = [];
     let sourcename_list = [];
-    last7Tag.map((tag, index) => {
+    last7Tag.forEach((tag) => {
       tagscanned_list = [...tagscanned_list, tag["count"]];
       tagname_list = [...tagname_list, tag["weekday"]];
     });
-    last7Reactive.map((source, index) => {
+    last7Reactive.forEach((source) => {
       sourcescanned_list = [...sourcescanned_list, source["count"]];
       sourcename_list = [...sourcename_list, source["weekday"]];
     });
@@ -142,14 +117,24 @@ const Dashboard = () => {
     setSourceNames(sourcename_list);
   }, []);
 
+  const chartOption = {
+    options: {
+      plotOptions: {
+        bar: {
+          borderRadius: 10,
+        },
+      },
+    },
+  };
+
   return (
-    <div>
-      <p style={{ fontSize: "24px" }}>Active Channels</p>
+    <div id="dashboard">
+      <p className="section__header">Top Active Channels</p>
       <div className="row">
         {statusCards.map((item, index) => (
           <div className="col-3 col-md-6 col-sm-12" key={index}>
             <StatusCard
-              icon={item.icon}
+              id={item.id}
               title={item.title}
               count={item.count}
               new={item.new}
@@ -157,55 +142,38 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
-
-      <p style={{ fontSize: "24px" }}>Tag Statistics</p>
-      <div
-        className="row"
-        style={{ alignItems: "stretch", marginBottom: "30px" }}
-      >
+      <p className="section__header">Tag Statistics</p>
+      <div className="row stretch__item">
         <div className="col-6 col-md-12">
-          <div
-            className="card"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              height: "100%",
-            }}
-          >
+          <div className="card card__dashboard">
             <div className="card__header">
               <p>Top Tags</p>
             </div>
             <div className="card__body">
               <Table
-                headerData={topCustomers.head}
-                bodyData={topCustomers.body}
-                renderHeader={(item, index) => renderCustomerHead(item, index)}
-                renderBody={(item, index) => renderCustomerBody(item, index)}
+                headerData={topTags.head}
+                bodyData={topTags.body}
+                renderHeader={(item, index) => renderTagHead(item, index)}
+                renderBody={(item, index) => renderTagBody(item, index)}
               />
             </div>
             <div className="card__footer">
-              <Button>
-                <Link to="/tag">View All</Link>
-              </Button>
+              <Link to="/tag">
+                <Button>View All</Button>
+              </Link>
             </div>
           </div>
         </div>
         <div className="col-6 col-md-12">
-          <div
-            className="card"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              height: "100%",
-            }}
-          >
+          <div className="card card__dashboard">
             <div className="card__header">
-              <p>Captured Events on Last 7 days</p>
+              <p>Scanned Videos on Last 7 days</p>
             </div>
             <Chart
-              options={{ labels: tagNames, ...chartOption.options }}
+              options={{
+                labels: tagNames,
+                ...chartOption.options,
+              }}
               series={[{ name: "Videos by tag", data: tagScanneds }]}
               type="bar"
             />
@@ -213,56 +181,41 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <p style={{ fontSize: "24px" }}>Source Statistics</p>
-      <div
-        className="row"
-        style={{ alignItems: "stretch", marginBottom: "30px" }}
-      >
+      <p className="section__header mt-2">Source Statistics</p>
+      <div className="row stretch__item">
         <div className="col-6 col-md-12">
-          <div
-            className="card"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              height: "100%",
-            }}
-          >
+          <div className="card card__dashboard">
             <div className="card__header">
               <p>Top Sources</p>
             </div>
             <div className="card__body">
               <Table
-                headerData={latestOrders.header}
-                bodyData={latestOrders.body}
-                renderHeader={(item, index) => renderOrderHead(item, index)}
-                renderBody={(item, index) => renderOrderBody(item, index)}
+                headerData={topSources.header}
+                bodyData={topSources.body}
+                renderHeader={(item, index) => renderSourceHead(item, index)}
+                renderBody={(item, index) => renderSourceBody(item, index)}
               />
             </div>
             <div className="card__footer">
-              <Button>
-                <Link to="/source">View All</Link>
-              </Button>
+              <Link to="/source">
+                <Button>View All</Button>
+              </Link>
             </div>
           </div>
         </div>
         <div className="col-6 col-md-12">
-          <div
-            className="card"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              height: "100%",
-            }}
-          >
+          <div className="card card__dashboard">
             <div className="card__header">
               <p>Reactive on Last 7 days</p>
             </div>
             <Chart
               options={{ labels: sourceNames, ...chartOption.options }}
               series={[
-                { name: "Reactive Bar", data: sourceScanneds, type: "bar" },
+                {
+                  name: "Reactive by Source",
+                  data: sourceScanneds,
+                  type: "bar",
+                },
               ]}
               type="bar"
             />
