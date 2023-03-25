@@ -1,25 +1,26 @@
-import React from "react";
-import "./filtercollapse.css";
+import { Select } from "antd";
+// import "./filtercollapse.css";
+
+const { Option } = Select;
+
+const handleChange = (value) => {
+  console.log(`Selected ${value}`);
+};
 
 const FilterCollapse = ({ data }) => {
-
-    return (
-        <div className="filtercollapse">
-            {data.map((groupList, index) => (
-                <div className="filtercollapse__group">
-                    <div className="filtercollapse__grouptitle">
-                        {groupList.group}
-                    </div>
-                    <div className="filtercollapse__groupdata">
-                        {groupList.options.map((item, index) => (
-                            <div className="filtercollapse__item">{item.text}</div>
-                        ))}
-
-                    </div>
-                </div>
-            ))}
-        </div>
-    )
-}
+  return (
+    <div className="filtercollapse">
+      <Select
+        defaultValue="option1"
+        style={{ width: 120 }}
+        onChange={handleChange}
+      >
+        <Option value="option1">Option 1</Option>
+        <Option value="option2">Option 2</Option>
+        <Option value="option3">Option 3</Option>
+      </Select>
+    </div>
+  );
+};
 
 export default FilterCollapse;

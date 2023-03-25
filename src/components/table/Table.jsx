@@ -54,7 +54,7 @@ const Table = (props) => {
             className={`table__pagination-item`}
             onClick={() => showCurrentPage(index)}
           >
-            {item + 1}
+            <span className={index === currentPage ? "table__pagination-item-selected" : ""}>{item + 1}</span>
           </div>
         ))}
       </div>

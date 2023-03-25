@@ -4,6 +4,7 @@
     "name": "BBC News Tiếng Việt",
     "scanned": "1196",
     "type": "danger",
+    "reactives": 625,
     "url": "https://www.youtube.com/c/bbctiengviet"
   },
   {
@@ -11,6 +12,7 @@
     "name": "Việt Tân",
     "scanned": "2896",
     "type": "danger",
+    "reactives": 625,
     "url": "https://www.youtube.com/c/VietTan"
   },
   {
@@ -18,6 +20,7 @@
     "name": "VOA Tiếng Việt",
     "scanned": "722",
     "type": "danger",
+    "reactives": 625,
     "url": "https://www.youtube.com/c/VOATiengViet"
   },
   {
@@ -25,6 +28,7 @@
     "name": "TRÍ TUỆ TỎA SÁNG",
     "scanned": "652",
     "type": "primary",
+    "reactives": 625,
     "url": "https://www.facebook.com/hocvienkythuat"
   },
   {
@@ -32,6 +36,7 @@
     "name": "RFA Tiếng Việt",
     "scanned": "1196",
     "type": "danger",
+    "reactives": 625,
     "url": "https://www.youtube.com/user/RFAVietnamese"
   },
   {
@@ -39,6 +44,7 @@
     "name": "VTV24",
     "scanned": "2101",
     "type": "danger",
+    "reactives": 625,
     "url": "https://www.youtube.com/c/vtv24"
   }
 ]
