@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ContentCard from "../content-card/ContentCard";
 import Button from "../button/Button";
 
-import contentList from "../../assets/JsonData/content-data.json";
+import contentList from "../../assets/JsonData/fake_data.json";
 
 const VideoGrid = (props) => {
   const [items, setItems] = useState([]);
@@ -39,11 +39,11 @@ const VideoGrid = (props) => {
             <div className="col-3 col-md-6 col-sm-12" key={index}>
               <ContentCard
                 id={item._id}
-                channel={item.video_channel}
-                title={item.video_title}
-                url={item.video_link}
-                content={item.video_content}
-                type={item.video_type}
+                channel={item.vd_channel}
+                title={item.vd_title}
+                url={item.vd_link}
+                content={item.vd_highlight}
+                type={item.vd_label}
               />
             </div>
           ))}

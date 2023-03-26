@@ -20,8 +20,8 @@ const Flowdata = () => {
         {videos.map((item,index)=> (
           <div className='data_item' key={index}>
              <div>id : {item._id}</div>
-             <div>type: {item.video_type}</div>
-             <p dangerouslySetInnerHTML={{ __html: item.video_content }}></p>
+             <div>type: {item.vd_type}</div>
+             <p dangerouslySetInnerHTML={{ __html: item.vd_highlight }}></p>
            
           </div>
         ))}

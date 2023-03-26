@@ -4,13 +4,15 @@ import { useParams } from "react-router-dom";
 import Badge from "../components/badge/Badge";
 import CardNote from "../components/card-note/CardNote";
 
-import videoList from "../assets/JsonData/content-data.json";
+import videoList from "../assets/JsonData/fake_data.json";
 import "./Pages.css";
 
 const ContentInfo = () => {
   const { videoid } = useParams();
 
   const [videoDetail, setVideoDetail] = useState({});
+
+  
 
   useEffect(() => {
     const getDetail = () => {
@@ -30,19 +32,19 @@ const ContentInfo = () => {
             <p className="text-bold">
               Title:{" "}
               <span className="text-bold tag-span">
-                {videoDetail.video_title}
+                {videoDetail.vd_title}
               </span>
             </p>
             <p className="text-bold">
               Channel:{" "}
               <span className="text-bold tag-span">
-                {videoDetail.video_channel}
+                {videoDetail.vd_channel}
               </span>
             </p>
             <p className="text-bold">
               Published Date:{" "}
               <span className="text-bold tag-span">
-                {videoDetail.video_publishAt}
+                {videoDetail.vd_publishAt}
               </span>
             </p>
             <div className="badge-div">
@@ -50,17 +52,17 @@ const ContentInfo = () => {
               <Badge
                 className="text-bold"
                 type={
-                  videoDetail.video_type === 0
+                  videoDetail.vd_label === 0
                     ? "primary"
-                    : videoDetail.video_type === 1
+                    : videoDetail.vd_label === 1
                     ? "success"
                     : "danger"
                 }
                 clickable={"none"}
                 content={
-                  videoDetail.video_type === 2
+                  videoDetail.vd_label === 2
                     ? "Tiêu cực"
-                    : videoDetail.video_type === 1
+                    : videoDetail.vd_label === 1
                     ? "Tích cực"
                     : "Trung tính"
                 }
@@ -75,8 +77,8 @@ const ContentInfo = () => {
             <p className="text-bold">
               Reactive Number:{" "}
               <span className="text-bold tag-span">
-                <a href={videoDetail.video_link}>
-                  {videoDetail.react + videoDetail.comments}
+                <a href={videoDetail.vd_link}>
+                  {videoDetail.vd_react + videoDetail.vd_comment}
                 </a>
               </span>
             </p>
@@ -85,9 +87,9 @@ const ContentInfo = () => {
               <Badge
                 className="text-bold mr-0-5"
                 type={"primary"}
-                content={"Ukraine"}
+                content={videoDetail.video_tag}
               />
-              <Badge className="text-bold" type={"primary"} content={"Nga"} />
+              
             </div>
             <div className="row gap-20">
               {videoDetail.followed === false ? (
@@ -101,7 +103,7 @@ const ContentInfo = () => {
                   Unfollow
                 </button>
               )}
-              <a href={videoDetail.video_link} target="_blank" rel="noreferrer">
+              <a href={videoDetail.vd_link} target="_blank" rel="noreferrer">
                 <button className="btn btn-view btn-gotovideo">
                   <i className="bx bx-fast-forward"></i>
                   Go to Video
@@ -119,7 +121,7 @@ const ContentInfo = () => {
               width="942"
               height="530"
               src={videoDetail.embed_link}
-              title={videoDetail.video_title}
+              title={videoDetail.vd_title}
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
@@ -134,7 +136,7 @@ const ContentInfo = () => {
             <CardNote />
             <p
               className="text-content"
-              dangerouslySetInnerHTML={{ __html: videoDetail.video_content }}
+              dangerouslySetInnerHTML={{ __html: videoDetail.vd_highlight }}
             ></p>
           </div>
         </div>

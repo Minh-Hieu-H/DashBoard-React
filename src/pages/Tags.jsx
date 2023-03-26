@@ -18,7 +18,7 @@ const customerTableHead = [
 
 const Tags = () => {
   const history = useHistory();
-
+  //  defined 
   const viewDetails = (tagid) => history.push("/tag/" + tagid);
 
   const renderHead = (item, index) => <th key={index}>{item}</th>;
