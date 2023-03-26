@@ -12,6 +12,8 @@ const ContentInfo = () => {
 
   const [videoDetail, setVideoDetail] = useState({});
 
+  const [is_Detect, setDetect] =useState(false)
+
   
 
   useEffect(() => {
@@ -130,13 +132,14 @@ const ContentInfo = () => {
         </div>
         <div className="card__header">
           <p>Information Extraction</p>
+          <button onClick={()=> {setDetect(!is_Detect)}}>Detect Objects</button>
         </div>
         <div className="card row">
           <div className="card__body">
-            <CardNote />
+            {is_Detect ?<CardNote />:null}
             <p
               className="text-content"
-              dangerouslySetInnerHTML={{ __html: videoDetail.vd_highlight }}
+              dangerouslySetInnerHTML={{ __html: is_Detect ? videoDetail.vd_highlight : videoDetail.vd_content }}
             ></p>
           </div>
         </div>
