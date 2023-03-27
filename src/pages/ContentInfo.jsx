@@ -131,8 +131,8 @@ const ContentInfo = () => {
           </div>
         </div>
         <div className="card__header">
-          <p>Information Extraction</p>
-          <button onClick={()=> {setDetect(!is_Detect)}}>Detect Objects</button>
+          <p style={{display:"inline-flex"}}>Information Extraction</p>
+          <button  style={{float:"right", marginRight:"20px",}} className="btnDashboard" onClick={()=> {setDetect(!is_Detect)}}>Detect Objects</button>
         </div>
         <div className="card row">
           <div className="card__body">
