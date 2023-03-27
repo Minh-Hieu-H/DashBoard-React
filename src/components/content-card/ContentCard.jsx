@@ -19,7 +19,7 @@ const ContentCard = (props) => {
           <p>{props.channel}</p>
         </div>
       </div>
-      <div className="row" style={{ padding: "10px 0px 20px" }}>
+      <div className="row fixed_video_card" style={{ padding: "10px 0px 20px" }}>
         <div className="content-card_content">
           <p>{props.title}</p>
         </div>

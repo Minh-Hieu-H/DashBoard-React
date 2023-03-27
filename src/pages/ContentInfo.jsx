@@ -12,9 +12,7 @@ const ContentInfo = () => {
 
   const [videoDetail, setVideoDetail] = useState({});
 
-  const [is_Detect, setDetect] =useState(false)
-
-  
+  const [is_Detect, setDetect] = useState(false);
 
   useEffect(() => {
     const getDetail = () => {
@@ -33,9 +31,7 @@ const ContentInfo = () => {
           <div className="card__body card__body-p">
             <p className="text-bold">
               Title:{" "}
-              <span className="text-bold tag-span">
-                {videoDetail.vd_title}
-              </span>
+              <span className="text-bold tag-span">{videoDetail.vd_title}</span>
             </p>
             <p className="text-bold">
               Channel:{" "}
@@ -91,7 +87,6 @@ const ContentInfo = () => {
                 type={"primary"}
                 content={videoDetail.video_tag}
               />
-              
             </div>
             <div className="row gap-20">
               {videoDetail.followed === false ? (
@@ -101,7 +96,7 @@ const ContentInfo = () => {
                 </button>
               ) : (
                 <button className="btn btn-delete btn-gotovideo">
-                  <i className="bx bx-user-x"></i>
+                  <i className="bx bx-user-x mr-0-5"></i>
                   Unfollow
                 </button>
               )}
@@ -130,16 +125,40 @@ const ContentInfo = () => {
             ></iframe>
           </div>
         </div>
-        <div className="card__header">
-          <p style={{display:"inline-flex"}}>Information Extraction</p>
-          <button  style={{float:"right", marginRight:"20px",}} className="btnDashboard" onClick={()=> {setDetect(!is_Detect)}}>Detect Objects</button>
+        <div className="card__header justify-div">
+          <p>Information Extraction</p>
+          {!is_Detect ? (
+            <button
+              className="btn btn-view btn-gotovideo mb-1"
+              onClick={() => {
+                setDetect(!is_Detect);
+              }}
+            >
+              <i className="bx bx-transfer mr-0-5"></i>
+              Dectect Objects
+            </button>
+          ) : (
+            <button
+              className="btn btn-delete btn-gotovideo mb-1"
+              onClick={() => {
+                setDetect(!is_Detect);
+              }}
+            >
+              <i className="bx bx-transfer mr-0-5"></i>
+              Plain Text
+            </button>
+          )}
         </div>
         <div className="card row">
           <div className="card__body">
-            {is_Detect ?<CardNote />:null}
+            {is_Detect ? <CardNote /> : null}
             <p
               className="text-content"
-              dangerouslySetInnerHTML={{ __html: is_Detect ? videoDetail.vd_highlight : videoDetail.vd_content }}
+              dangerouslySetInnerHTML={{
+                __html: is_Detect
+                  ? videoDetail.vd_highlight
+                  : videoDetail.vd_content,
+              }}
             ></p>
           </div>
         </div>
