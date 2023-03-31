@@ -14,8 +14,8 @@ const VideoGrid = (props) => {
 
   useEffect(() => {
     const getList = async () => {
-      setItems(contentList.slice(0, props.limit));
-      setTotalPage(Math.ceil(contentList.length / props.limit));
+      setItems(props.videos.slice(0, props.limit));
+      setTotalPage(Math.ceil(props.videos.length / props.limit));
     };
     getList();
   }, [props.limit]);
@@ -23,7 +23,7 @@ const VideoGrid = (props) => {
   const loadMore = async () => {
     let itemmore = null;
     let newpage = page + 1;
-    itemmore = contentList.slice(
+    itemmore = props.videos.slice(
       (newpage - 1) * props.limit,
       newpage * props.limit
     );

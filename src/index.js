@@ -13,6 +13,9 @@ import store from './redux/store';
 // Page test Data Redux
 import Flowdata from './testdata/flowData';
 
+//  test loading err
+import Loading from './components/loadingError/Loading';
+import Message from './components/loadingError/Error'; 
 document.title = 'Reconnaissance Tool'
 
 ReactDOM.render(
@@ -21,6 +24,9 @@ ReactDOM.render(
       <React.StrictMode>
         <Layout />
         {/* <Flowdata/> */}
+        {/* <Loading/>
+        <Message  variant="alert-danger">{`Long`}</Message> */}
+
       </React.StrictMode>
     </Provider>
   </React.StrictMode>,

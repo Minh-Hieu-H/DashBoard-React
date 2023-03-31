@@ -11,3 +11,19 @@ export const videoListReducer = (state = {videos:[]},action) => {
 
     }
 }
+
+export const videoDetailsReducer =(
+    state = {video:{}},
+    action
+) => {
+    switch(action.type){
+        case 'VIDEO_DETAILS_REQUEST':
+            return {...state, loading:true}
+        case 'VIDEO_DETAILS_SUCCESS':
+            return {loading:false, video:action.payload}
+        case 'VIDEO_DETAILS_FAIL':
+            return { loading:false, error:action.payload}
+        default :
+            return state;
+    }
+}

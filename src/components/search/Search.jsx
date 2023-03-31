@@ -2,20 +2,13 @@ import React, { useState } from "react";
 
 import "./search.css"
 
-const Search = ({ search, handleChangeKey, placeholder }) => {
-    const [searchKey, setSearchKey] = useState(search);
-    const handleChange = (event) => {
-        const value = event.target.value;
-        setSearchKey(value);
-        handleChangeKey(value);
-    };
-
-    return (
+const Search = (props) => 
+ (
         <div className="search">
-            <input type="text" value={searchKey} onChange={handleChange} placeholder={placeholder} />
-            <i className="bx bx-search" />
+            <input type="text" value={props.value} onChange={props.onChange?(e)=> props.onChange(e):null} placeholder={props.placeholder} />
+            <i onClick={props.handleEvent ? props.handleEvent:null} className="bx bx-search" />
         </div>
     )
-}
+
 
 export default Search;

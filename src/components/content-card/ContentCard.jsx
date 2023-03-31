@@ -1,12 +1,12 @@
 import { useHistory } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import "./contentcard.css";
 
 const ContentCard = (props) => {
   const history = useHistory();
 
   const viewContentDetails = (item) => history.push("/video/" + props.id);
-  
+
   const cardBorder = `3px solid ${(props.type === 2) ? "#FF4560" : ((props.type === 1) ? "#00E396" : "#008FFB")}`
 
   return (
@@ -33,7 +33,10 @@ const ContentCard = (props) => {
         <button className="content-card_button" onClick={viewContentDetails}>
           <p className="mb-0-5"></p>
           <i className="bx bx-search-alt mr-0-5"></i>
-          <span>Details</span>
+          <span>Details
+            <Link to={`/videos/${props._id}`}>
+            </Link>
+          </span>
         </button>
       </div>
     </div>

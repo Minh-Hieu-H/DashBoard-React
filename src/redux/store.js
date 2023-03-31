@@ -3,13 +3,15 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import ThemeReducer from "./reducers/ThemeReducer";
-import {videoListReducer} from "./reducers/VideoReducer"
+import {videoListReducer,videoDetailsReducer} from "./reducers/VideoReducer"
 
 
 
 const rootReducer = combineReducers(
     {theme:ThemeReducer,
      videoList: videoListReducer,
+     videoDetails: videoDetailsReducer,
+
     })
 
 const middleware = [thunk]
