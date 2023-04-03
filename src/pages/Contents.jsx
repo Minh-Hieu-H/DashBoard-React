@@ -30,6 +30,7 @@ const Contents = () => {
 
   const videoList = useSelector((state) => state.videoList)
   const { loading, videos, error } = videoList;
+  const totalVideo = videos.length;
 
   useEffect(() => {
     dispatch(getListVideo())
@@ -60,6 +61,7 @@ const Contents = () => {
           placeholder={"Search Here ..."}
           handleEvent={handleSearchVideo}
         />
+        {(totalVideo > 0) && <p style={{margin: 10, fontWeight: 600}}>Tìm thấy {totalVideo} video.</p>}
         <Select
           className="selectFilter"
           defaultValue="All videos"
