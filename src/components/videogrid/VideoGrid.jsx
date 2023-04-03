@@ -4,6 +4,7 @@ import ContentCard from "../content-card/ContentCard";
 import Button from "../button/Button";
 
 import contentList from "../../assets/JsonData/fake_data.json";
+import Message from "../loadingError/Error";
 
 const VideoGrid = (props) => {
   const [items, setItems] = useState([]);
@@ -31,10 +32,12 @@ const VideoGrid = (props) => {
     setPage(newpage);
   };
 
+  const totalVideo = props.videos.length;
   return (
-    <div>
-      <div className="card__body">
-        <div className="row">
+    <div className="card__body">
+      {totalVideo === 0 ?
+        <Message variant={'alert-warning'}>Không tìm thấy video phù hợp</Message>
+        : <div className="row">
           {items.map((item, index) => (
             <div className="col-3 col-md-6 col-sm-12" key={index}>
               <ContentCard
@@ -47,8 +50,7 @@ const VideoGrid = (props) => {
               />
             </div>
           ))}
-        </div>
-      </div>
+        </div>}
       {page < totalPage ? (
         <div className="movie-grid__loadmore card__footer">
           <Button className=" btn" onClick={loadMore}>
