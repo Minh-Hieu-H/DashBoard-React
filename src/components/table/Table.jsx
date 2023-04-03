@@ -3,21 +3,25 @@ import { useState } from "react";
 import "./table.css";
 
 const Table = (props) => {
+
   const initDataShow =
     props.limit && props.bodyData
       ? props.bodyData.slice(0, Number(props.limit))
       : props.bodyData;
 
   const [dataShow, setDataShow] = useState(initDataShow);
-
+  console.log(initDataShow)
   let pages = 1;
 
   let range = [];
 
   if (props.limit !== undefined) {
     let page = Math.floor(props.bodyData.length / Number(props.limit));
+    
     pages = props.bodyData.length % Number(props.limit) === 0 ? page : page + 1;
+
     range = [...Array(pages).keys()];
+
   }
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -25,10 +29,11 @@ const Table = (props) => {
   const showCurrentPage = (page) => {
     const start = page * Number(props.limit);
     const end = start + Number(props.limit);
+    console.log("Check Show current",props.bodyData.slice(start, end))
     setDataShow(props.bodyData.slice(start, end));
     setCurrentPage(page);
   };
-
+  console.log(dataShow)
   return (
     <div className="table-wrapper">
       <table>
@@ -41,9 +46,10 @@ const Table = (props) => {
             </tr>
           </thead>
         ) : null}
+   
         {props.bodyData && props.renderBody ? (
           <tbody>
-            {dataShow.map((item, index) => props.renderBody(item, index))}
+            {dataShow.map((item, index) => props.renderBody(item,index))}
           </tbody>
         ) : null}
       </table>

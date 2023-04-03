@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import MyWordCloud from "../components/wordcloud/MyWordCloud";
 import VideoGrid from "../components/videogrid/VideoGrid";
 
 import tagList from "../assets/JsonData/tag-data.json";
+
+// Redux-action
+import { getTagDetail } from "../redux/actions/TagAction";
+
+// loading-err
+import Loading from "../components/loadingError/Loading";
+import Message from "../components/loadingError/Error";
+
 import "./Pages.css";
 
 const chartOption2 = {
@@ -75,100 +83,111 @@ const chartOption4 = {
 
 const TagInfo = () => {
   const { tagid } = useParams();
+  console.log("Tagname is", tagid)
 
-  const [tagDetail, setTagDetail] = useState({});
-
-  useEffect(() => {
-    const getDetail = () => {
-      setTagDetail(tagList.find((tag) => tag.id.toString() === tagid));
-    };
-    getDetail();
-  }, [tagid]);
-
+  const [dataAnalys, setDataAnalys] = useState([1, 0, 0])
+  // Set Video by tag detail
+  const dispatch = useDispatch();
   const ThemeReducer = useSelector((state) => state.theme.mode);
-
+  const videoByTag = useSelector((state) => state.tagDetails)
+  const { loading, videos, error } = videoByTag
+  useEffect(() => {
+    dispatch(getTagDetail(tagid))
+  }, [tagid]);
+  if (videos) {
+    const negative_list = videos.filter((video) => video.vd_label === 2)
+    const positive_list = videos.filter((video) => video.vd_label === 1)
+    const neural_list = videos.filter((video) => video.vd_label === 0)
+    console.log([negative_list.length, positive_list.length, neural_list.length])
+  }
+  console.log("Loading is :", loading, "  Video is: ", videos, " Error is: ", error)
   return (
-    <div>
-      <p className="section__header page-header">
-        Tag Manager / Tag: <span className="tag-span">{tagDetail.name}</span>
-      </p>
-      <div className="col-12">
-        <div className="card row">
-          <div className="col-4 col-md-12">
-            <div className="card__body card__body-p">
-              <p>
-                Tag ID:{" "}
-                <span className="text-bold tag-span">{tagDetail.id}</span>
+    <>
+      {
+        loading ? (<div> <Loading /> </div>) :
+          error ? (<div> <Message variant="alert-danger">{error}</Message></div>) :
+            <div>
+              <p className="section__header page-header">
+                Tag Manager / Tag: <span className="tag-span">{tagid}</span>
               </p>
-              <p>
-                Tag Name:{" "}
-                <span className="text-bold tag-span">{tagDetail.name}</span>
-              </p>
-              <p>
-                All Scanned Contents:{" "}
-                <span className="text-bold tag-span">{tagDetail.scanned}</span>
-              </p>
-              <p>
-                Scanned Videos In Last 1 Year:{" "}
-                <span className="text-bold tag-span">20</span>
-              </p>
+              <div className="col-12">
+                <div className="card row">
+                  <div className="col-4 col-md-12">
+                    <div className="card__body card__body-p">
+                      <p>
+                        Tag Name:{" "}
+                        <span className="text-bold tag-span">{tagid}</span>
+                      </p>
+                      <p>
+                        All Scanned Contents:{" "}
+                        <span className="text-bold tag-span">{videos.length}</span>
+                      </p>
+                      <p>
+                        Scanned Videos In Last 1 Year:{" "}
+                        <span className="text-bold tag-span">20</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div className="col-8 col-md-12">
+                    <div className="card-chart full-height col-12">
+                      <Chart
+                        options={
+                          ThemeReducer === "theme-mode-dark"
+                            ? {
+                              ...chartOption2.options,
+                              theme: { mode: "dark" },
+                              background: "#2d2d2d",
+                            }
+                            : {
+                              ...chartOption2.options,
+                              theme: { mode: "light" },
+                            }
+                        }
+                        series={chartOption2.series}
+                        height="120%"
+                        type="area"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="card__header">
+                  <p>Tag analysis</p>
+                </div>
+                <div className="card row">
+                  <div className="col-4 col-md-12">
+                    <div className="card-chart full-height col-12">
+                      <Chart
+
+                        options={
+                          ThemeReducer === "theme-mode-dark"
+                            ? {
+                              ...chartOption4.options,
+                              theme: { mode: "dark" },
+                            }
+                            : {
+                              ...chartOption4.options,
+                              theme: { mode: "light" },
+                            }
+                        }
+                        series={videos ? [videos.filter((video) => video.vd_label === 2).length, videos.filter((video) => video.vd_label === 1).length, videos.filter((video) => video.vd_label === 0).length] : [1,0,0]}
+                        type="pie"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-8 col-md-12">
+                    <MyWordCloud />
+                  </div>
+                </div>
+                <div className="card__header">
+                  <p>Top videos of Tag</p>
+                </div>
+                <VideoGrid limit={8} videos={videos} />
+              </div>
             </div>
-          </div>
-          <div className="col-8 col-md-12">
-            <div className="card-chart full-height col-12">
-              <Chart
-                options={
-                  ThemeReducer === "theme-mode-dark"
-                    ? {
-                        ...chartOption2.options,
-                        theme: { mode: "dark" },
-                        background: "#2d2d2d",
-                      }
-                    : {
-                        ...chartOption2.options,
-                        theme: { mode: "light" },
-                      }
-                }
-                series={chartOption2.series}
-                height="120%"
-                type="area"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="card__header">
-          <p>Tag analysis</p>
-        </div>
-        <div className="card row">
-          <div className="col-4 col-md-12">
-            <div className="card-chart full-height col-12">
-              <Chart
-                options={
-                  ThemeReducer === "theme-mode-dark"
-                    ? {
-                        ...chartOption4.options,
-                        theme: { mode: "dark" },
-                      }
-                    : {
-                        ...chartOption4.options,
-                        theme: { mode: "light" },
-                      }
-                }
-                series={chartOption4.series}
-                type="pie"
-              />
-            </div>
-          </div>
-          <div className="col-8 col-md-12">
-            <MyWordCloud />
-          </div>
-        </div>
-        <div className="card__header">
-          <p>Top videos of Tag</p>
-        </div>
-        <VideoGrid limit={8} />
-      </div>
-    </div>
+
+      }
+    </>
+
   );
 };
 

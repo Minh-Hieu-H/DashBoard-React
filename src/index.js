@@ -15,7 +15,7 @@ import Flowdata from './testdata/flowData';
 
 //  test loading err
 import Loading from './components/loadingError/Loading';
-import Message from './components/loadingError/Error'; 
+import Message from './components/loadingError/Error';
 document.title = 'Reconnaissance Tool'
 
 ReactDOM.render(
@@ -23,7 +23,7 @@ ReactDOM.render(
     <Provider store={store}>
       <React.StrictMode>
         <Layout />
-        {/* <Flowdata/> */}
+        {/* <Flowdata /> */}
         {/* <Loading/>
         <Message  variant="alert-danger">{`Long`}</Message> */}
 
