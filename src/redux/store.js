@@ -5,7 +5,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import ThemeReducer from "./reducers/ThemeReducer";
 import {videoListReducer,videoDetailsReducer} from "./reducers/VideoReducer"
 import { tagListReducer,tagDetailsReducer,tagCreateReducer } from "./reducers/TagReducer";
-
+import { streamListReducer } from "./reducers/StreamReducer";
 
 const rootReducer = combineReducers(
     {theme:ThemeReducer,
@@ -13,8 +13,8 @@ const rootReducer = combineReducers(
      videoDetails: videoDetailsReducer,
      tagList:tagListReducer,
      tagDetails:tagDetailsReducer,
-     tagCreate:tagCreateReducer
-
+     tagCreate:tagCreateReducer,
+     streamList: streamListReducer
     })
 
 const middleware = [thunk]
