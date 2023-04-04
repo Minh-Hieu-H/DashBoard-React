@@ -6,8 +6,8 @@ import Table from "../components/table/Table";
 import tagList from "../assets/JsonData/tag-data.json";
 
 // redux
-import { useDispatch, useSelector } from 'react-redux'
-import { getListTag,createTag } from '../redux/actions/TagAction'
+import { useDispatch, useSelector } from "react-redux";
+import { getListTag, createTag } from "../redux/actions/TagAction";
 // Handle Error
 import Loading from "../components/loadingError/Loading";
 import Message from "../components/loadingError/Error";
@@ -33,37 +33,40 @@ const ToastObjects = {
 
 const Tags = () => {
   const history = useHistory();
+
   //  flow data
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // State tag list
-  const tagListState = useSelector((state) => state.tagList)
+  const tagListState = useSelector((state) => state.tagList);
   const { loading, tags_list, by_tags_list, error } = tagListState;
-  const tag_statistics = (tags_list && by_tags_list)
-    ? tags_list.map((tag) => {
-      const foundTag = by_tags_list.find((item) => item._id === tag.vd_tag);
-      const count = foundTag ? foundTag.count : 0;
-      return { ...tag, count };
-    })
-    : [];
+  const tag_statistics =
+    tags_list && by_tags_list
+      ? tags_list.map((tag) => {
+          const foundTag = by_tags_list.find((item) => item._id === tag.vd_tag);
+          const count = foundTag ? foundTag.count : 0;
+          return { ...tag, count };
+        })
+      : [];
+      
   //  State add tag
-  const tagCreateState = useSelector((state)=> state.tagCreate)
+  const tagCreateState = useSelector((state) => state.tagCreate);
   const {
-    loading:loadingCreateTag,
+    loading: loadingCreateTag,
     error: errorCreateTag,
-    success:successCreateTag
-  } =tagCreateState;
+    success: successCreateTag,
+  } = tagCreateState;
 
-  useEffect(() => { 
-    if(successCreateTag){
+  useEffect(() => {
+    if (successCreateTag) {
       // toast.success("Tag Added", ToastObjects);
-      alert("Thêm dữ liệu thành công")
-      setTagValue("")
-      setOpenAdd(false)
-      dispatch({type: 'TAG_CREATE_RESET'})
+      alert("Thêm dữ liệu thành công");
+      setTagValue("");
+      setOpenAdd(false);
+      dispatch({ type: "TAG_CREATE_RESET" });
     }
-    dispatch(getListTag())
-   }, [dispatch,successCreateTag])
+    dispatch(getListTag());
+  }, [dispatch, successCreateTag]);
 
   //  coding layout
   const viewDetails = (tagid) => history.push("/tag/" + tagid);
@@ -71,18 +74,20 @@ const Tags = () => {
   const renderHead = (item, index) => <th key={index}>{item}</th>;
 
   const renderBody = (item, index) => (
-
     <tr key={index}>
       <td>{index + 1}</td>
       <td>{item.vd_tag}</td>
       <td>{item.count}</td>
       <td>
         <div className="flex-center">
-          <button onClick={
-            () => {
-              item.count === 0 ? alert("Chưa có video mới") : viewDetails(item.vd_tag)
+          <button
+            onClick={() => {
+              item.count === 0
+                ? alert("Chưa có video mới")
+                : viewDetails(item.vd_tag);
             }}
-            className="btn btn-view">
+            className="btn btn-view"
+          >
             <i className="bx bx-search-alt mr-0-5"></i>Details
           </button>
         </div>
@@ -106,18 +111,18 @@ const Tags = () => {
 
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-  const [tagValue,setTagValue] =useState("")
+  const [tagValue, setTagValue] = useState("");
 
-  console.log("Tag value is:",tagValue)
+  console.log("Tag value is:", tagValue);
   const showModalAdd = () => {
     setOpenAdd(true);
   };
 
-  const addTagHandle =(e)=> {
-    e.preventDefault()
-    console.log("Đã vào đến đây")
-    dispatch(createTag(tagValue))
-  }
+  const addTagHandle = (e) => {
+    e.preventDefault();
+    console.log("Đã vào đến đây");
+    dispatch(createTag(tagValue));
+  };
   const handleOkAdd = () => {
     setConfirmLoading(true);
     setTimeout(() => {
@@ -154,95 +159,98 @@ const Tags = () => {
 
   return (
     <>
-      {
-        loading ? (<div style={{ height: "100%" }}><Loading /> </div>) :
-          error ? (<Message variant={'alert-warning'}>{error}</Message>) :
-            (<div>
-              <div className="justify-div">
-                <p className="section__header">Tag Manager</p>
-                <button className="btn btn-add" onClick={showModalAdd}>
-                  <i className="bx bx-plus mr-0-5"></i>Add Tag
-                </button>
-              </div>
-              <div className="row">
-                <div className="col-12">
-                  <div className="card">
-                    <div className="card__body">
-                      <Table
-                        limit="10"
-                        headerData={customerTableHead}
-                        bodyData={tag_statistics}
-                        renderHeader={(item, index) => renderHead(item, index)}
-                        renderBody={(item, index) => renderBody(item, index)}
-                      />
-                    </div>
-                  </div>
+      {loading ? (
+        <div style={{ height: "100%" }}>
+          <Loading />{" "}
+        </div>
+      ) : error ? (
+        <Message variant={"alert-warning"}>{error}</Message>
+      ) : (
+        <div>
+          <div className="justify-div">
+            <p className="section__header">Tag Manager</p>
+            <button className="btn btn-add" onClick={showModalAdd}>
+              <i className="bx bx-plus mr-0-5"></i>Add Tag
+            </button>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <div className="card">
+                <div className="card__body">
+                  <Table
+                    limit="10"
+                    headerData={customerTableHead}
+                    bodyData={tag_statistics}
+                    renderHeader={(item, index) => renderHead(item, index)}
+                    renderBody={(item, index) => renderBody(item, index)}
+                  />
                 </div>
               </div>
-              <Modal
-                title="Add a new tag"
-                centered
-                open={openAdd}
-                onOk={handleOkAdd}
-                confirmLoading={confirmLoading}
-                onCancel={handleCancelAdd}
-                okText="Add"
-                okButtonProps={{
-                  className: "ok-btn",
-                  style: {
-                    backgroundColor: currentSecondColorVar,
-                  },
-                  onMouseEnter: (e) =>{
-                    (e.target.style.backgroundColor = currentMainColorVar);
-                
-                  },
-                  onMouseLeave: (e) =>
-                    (e.target.style.backgroundColor = currentSecondColorVar),
-                  onClick: (e)=> {
-                    addTagHandle(e)
-                  } 
-                }}
-                cancelButtonProps={{
-                  className: "cancel-btn",
-                }}
-              >
-                <div className="modalBody">
-                  <label className="modalLabel">Tag Name:</label>
-                  <input 
-                  className="modalInput" 
-                  type="text" 
-                  value={tagValue}
-                  onChange={(e)=>setTagValue(e.target.value)}>
-                  </input>
-                </div>
-              </Modal>
-              <Modal
-                centered
-                open={openDelete}
-                onOk={handleOkDelete}
-                confirmLoading={confirmLoading}
-                onCancel={handleCancelDelete}
-                okText="Unfollow"
-                okButtonProps={{
-                  className: "ok-btn",
-                  style: {
-                    backgroundColor: "#959595",
-                  },
-                  onMouseEnter: (e) => (e.target.style.backgroundColor = "#6b6a6a"),
-                  onMouseLeave: (e) => (e.target.style.backgroundColor = "#959595"),
-                }}
-                cancelButtonProps={{
-                  className: "cancel-btn",
-                }}
-              >
-                <div className="modalBody">
-                  <p>Are you sure you want to unfollow this tag?</p>
-                </div>
-              </Modal>
-            </div>)
-      }
-    </>)
-
+            </div>
+          </div>
+          <Modal
+            title="Add a new tag"
+            centered
+            open={openAdd}
+            onOk={handleOkAdd}
+            confirmLoading={confirmLoading}
+            onCancel={handleCancelAdd}
+            okText="Add"
+            okButtonProps={{
+              className: "ok-btn",
+              style: {
+                backgroundColor: currentSecondColorVar,
+              },
+              onMouseEnter: (e) => {
+                e.target.style.backgroundColor = currentMainColorVar;
+              },
+              onMouseLeave: (e) =>
+                (e.target.style.backgroundColor = currentSecondColorVar),
+              onClick: (e) => {
+                addTagHandle(e);
+              },
+            }}
+            cancelButtonProps={{
+              className: "cancel-btn",
+            }}
+          >
+            <div className="modalBody">
+              <label className="modalLabel">Tag Name:</label>
+              <input
+                className="modalInput"
+                type="text"
+                value={tagValue}
+                onChange={(e) => setTagValue(e.target.value)}
+              ></input>
+            </div>
+          </Modal>
+          <Modal
+            centered
+            open={openDelete}
+            onOk={handleOkDelete}
+            confirmLoading={confirmLoading}
+            onCancel={handleCancelDelete}
+            okText="Unfollow"
+            okButtonProps={{
+              className: "ok-btn",
+              style: {
+                backgroundColor: "#959595",
+              },
+              onMouseEnter: (e) => (e.target.style.backgroundColor = "#6b6a6a"),
+              onMouseLeave: (e) => (e.target.style.backgroundColor = "#959595"),
+            }}
+            cancelButtonProps={{
+              className: "cancel-btn",
+            }}
+          >
+            <div className="modalBody">
+              <p>Are you sure you want to unfollow this tag?</p>
+            </div>
+          </Modal>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default Tags;
