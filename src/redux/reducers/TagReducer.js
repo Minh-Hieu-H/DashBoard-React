@@ -25,3 +25,20 @@ export const  tagDetailsReducer =(
             return state;
     }
 }
+
+// Reducer create tag 
+export const tagCreateReducer =( state= {},action)=>
+{
+    switch(action.type) {
+        case 'TAG_CREATE_REQUEST':
+            return {loading:true}
+        case 'TAG_CREATE_SUCCESS':
+            return {loading:false, tag:action.payload,success:true}
+        case 'TAG_CREATE_FAIL':
+            return {loading:false, error:action.payload}
+        case 'TAG_CREATE_RESET':
+            return {}
+        default:
+            return state;
+    }
+}

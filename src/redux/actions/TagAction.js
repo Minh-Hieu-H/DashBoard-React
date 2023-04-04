@@ -45,3 +45,25 @@ export const getTagDetail = (tag) => async (dispatch) => {
         })
     }
 }
+
+//  create tag 
+export const createTag = (tag) => async (dispatch)=> {
+    try {
+        dispatch({type:"TAG_CREATE_REQUEST"})
+
+        const {data} = await axios.post(`${URL}/api/tags/`,{tagValue:tag})
+ 
+        dispatch({type:"TAG_CREATE_SUCCESS", payload:data})
+
+    }catch(error)
+    {
+        const message = error.response && error.response.data.message?
+                        error.response.data.message :
+                        error.message
+        dispatch({
+            type :"TAG_CREATE_FAIL",
+            payload:message
+
+        })
+    }
+}

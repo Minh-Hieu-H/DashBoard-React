@@ -7,10 +7,12 @@ import tagList from "../assets/JsonData/tag-data.json";
 
 // redux
 import { useDispatch, useSelector } from 'react-redux'
-import { getListTag } from '../redux/actions/TagAction'
+import { getListTag,createTag } from '../redux/actions/TagAction'
 // Handle Error
 import Loading from "../components/loadingError/Loading";
 import Message from "../components/loadingError/Error";
+import Toast from "../components/loadingError/Toast";
+import { toast } from "react-toastify";
 // CSS
 import "./Pages.css";
 import "antd/dist/antd.css";
@@ -22,11 +24,19 @@ const customerTableHead = [
   "view details",
   "delete",
 ];
+const ToastObjects = {
+  pauseOnFocusLoss: false,
+  draggable: false,
+  pauseOnHover: false,
+  autoClose: 2000,
+};
 
 const Tags = () => {
   const history = useHistory();
   //  flow data
   const dispatch = useDispatch()
+
+  // State tag list
   const tagListState = useSelector((state) => state.tagList)
   const { loading, tags_list, by_tags_list, error } = tagListState;
   const tag_statistics = (tags_list && by_tags_list)
@@ -36,8 +46,24 @@ const Tags = () => {
       return { ...tag, count };
     })
     : [];
+  //  State add tag
+  const tagCreateState = useSelector((state)=> state.tagCreate)
+  const {
+    loading:loadingCreateTag,
+    error: errorCreateTag,
+    success:successCreateTag
+  } =tagCreateState;
 
-  useEffect(() => { dispatch(getListTag()) }, [dispatch])
+  useEffect(() => { 
+    if(successCreateTag){
+      // toast.success("Tag Added", ToastObjects);
+      alert("Thêm dữ liệu thành công")
+      setTagValue("")
+      setOpenAdd(false)
+      dispatch({type: 'TAG_CREATE_RESET'})
+    }
+    dispatch(getListTag())
+   }, [dispatch,successCreateTag])
 
   //  coding layout
   const viewDetails = (tagid) => history.push("/tag/" + tagid);
@@ -80,10 +106,18 @@ const Tags = () => {
 
   const [confirmLoading, setConfirmLoading] = useState(false);
 
+  const [tagValue,setTagValue] =useState("")
+
+  console.log("Tag value is:",tagValue)
   const showModalAdd = () => {
     setOpenAdd(true);
   };
 
+  const addTagHandle =(e)=> {
+    e.preventDefault()
+    console.log("Đã vào đến đây")
+    dispatch(createTag(tagValue))
+  }
   const handleOkAdd = () => {
     setConfirmLoading(true);
     setTimeout(() => {
@@ -158,10 +192,15 @@ const Tags = () => {
                   style: {
                     backgroundColor: currentSecondColorVar,
                   },
-                  onMouseEnter: (e) =>
-                    (e.target.style.backgroundColor = currentMainColorVar),
+                  onMouseEnter: (e) =>{
+                    (e.target.style.backgroundColor = currentMainColorVar);
+                
+                  },
                   onMouseLeave: (e) =>
                     (e.target.style.backgroundColor = currentSecondColorVar),
+                  onClick: (e)=> {
+                    addTagHandle(e)
+                  } 
                 }}
                 cancelButtonProps={{
                   className: "cancel-btn",
@@ -169,7 +208,12 @@ const Tags = () => {
               >
                 <div className="modalBody">
                   <label className="modalLabel">Tag Name:</label>
-                  <input className="modalInput" type="text"></input>
+                  <input 
+                  className="modalInput" 
+                  type="text" 
+                  value={tagValue}
+                  onChange={(e)=>setTagValue(e.target.value)}>
+                  </input>
                 </div>
               </Modal>
               <Modal

@@ -4,7 +4,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import ThemeReducer from "./reducers/ThemeReducer";
 import {videoListReducer,videoDetailsReducer} from "./reducers/VideoReducer"
-import { tagListReducer,tagDetailsReducer } from "./reducers/TagReducer";
+import { tagListReducer,tagDetailsReducer,tagCreateReducer } from "./reducers/TagReducer";
 
 
 const rootReducer = combineReducers(
@@ -13,6 +13,7 @@ const rootReducer = combineReducers(
      videoDetails: videoDetailsReducer,
      tagList:tagListReducer,
      tagDetails:tagDetailsReducer,
+     tagCreate:tagCreateReducer
 
     })
 
