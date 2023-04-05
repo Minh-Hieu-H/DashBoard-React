@@ -10,6 +10,8 @@ import statusCards from "../assets/JsonData/status-card-data.json";
 import last7Tag from "../assets/JsonData/last-7-tag.json";
 import last7Reactive from "../assets/JsonData/last-7-reactive.json";
 import "./Pages.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getTopNegVideo } from "../redux/actions/VideoAction";
 
 const topTags = {
   head: ["tag name", "scanned videos"],
@@ -90,6 +92,8 @@ const renderSourceBody = (item, index) => (
 );
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+
   const [tagScanneds, setTagScanneds] = useState([]);
 
   const [tagNames, setTagNames] = useState([]);
@@ -98,30 +102,45 @@ const Dashboard = () => {
 
   const [sourceScanneds, setSourceScanneds] = useState([]);
 
+  const topNegVideoState = useSelector((state) => state.videoList);
+  const {
+    loading: loadingTopNeg,
+    error: errorLoadTopNeg,
+    success: successLoadTopNeg,
+  } = topNegVideoState;
+
   useEffect(() => {
-    let tagscanned_list = [];
+    // if (loadingTopNeg) {
+    //   dispatch({ type: "VIDEO_LIST_REQUEST" });
+    // }
+    // if (successLoadTopNeg) {
+    //   dispatch(getTopNegVideo(), { type: "VIDEO_LIST_SUCCESS" });
+    // }
+    // if (errorLoadTopNeg) {
+    //   dispatch({ type: "VIDEO_LIST_FAIL" });
+    // }
+    console.log(topNegVideoState)
+    let tagscanned_list = successLoadTopNeg;
     let tagname_list = [];
     let sourcescanned_list = [];
     let sourcename_list = [];
-    last7Tag.forEach((tag) => {
-      tagscanned_list = [...tagscanned_list, tag["count"]];
-      tagname_list = [...tagname_list, tag["weekday"]];
-    });
+
     last7Reactive.forEach((source) => {
       sourcescanned_list = [...sourcescanned_list, source["count"]];
       sourcename_list = [...sourcename_list, source["weekday"]];
     });
-    setTagScanneds(tagscanned_list);
+    setTagScanneds(tagscanned_list); //////
     setTagNames(tagname_list);
     setSourceScanneds(sourcescanned_list);
     setSourceNames(sourcename_list);
-  }, []);
+  }, [dispatch, loadingTopNeg, successLoadTopNeg, errorLoadTopNeg]);
 
   const chartOption = {
     options: {
       plotOptions: {
         bar: {
           borderRadius: 10,
+          horizontal: true,
         },
       },
     },
@@ -142,46 +161,8 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
-      <p className="section__header">Tag Statistics</p>
-      <div className="row stretch__item">
-        <div className="col-6 col-md-12">
-          <div className="card card__dashboard">
-            <div className="card__header">
-              <p>Top Tags</p>
-            </div>
-            <div className="card__body">
-              <Table
-                headerData={topTags.head}
-                bodyData={topTags.body}
-                renderHeader={(item, index) => renderTagHead(item, index)}
-                renderBody={(item, index) => renderTagBody(item, index)}
-              />
-            </div>
-            <div className="card__footer">
-              <Link to="/tag">
-                <Button>View All</Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-        <div className="col-6 col-md-12">
-          <div className="card card__dashboard">
-            <div className="card__header">
-              <p>Scanned Videos on Last 7 days</p>
-            </div>
-            <Chart
-              options={{
-                labels: tagNames,
-                ...chartOption.options,
-              }}
-              series={[{ name: "Videos by tag", data: tagScanneds }]}
-              type="bar"
-            />
-          </div>
-        </div>
-      </div>
+      <p className="section__header">Statistics</p>
 
-      <p className="section__header mt-2">Source Statistics</p>
       <div className="row stretch__item">
         <div className="col-6 col-md-12">
           <div className="card card__dashboard">
@@ -206,7 +187,7 @@ const Dashboard = () => {
         <div className="col-6 col-md-12">
           <div className="card card__dashboard">
             <div className="card__header">
-              <p>Reactive on Last 7 days</p>
+              <p>Top Unfollowed Sources</p>
             </div>
             <Chart
               options={{ labels: sourceNames, ...chartOption.options }}
@@ -218,6 +199,46 @@ const Dashboard = () => {
                 },
               ]}
               type="bar"
+            />
+          </div>
+        </div>
+      </div>
+
+      <p className="section__header mt-2"></p>
+      <div className="row stretch__item">
+        <div className="col-6 col-md-12">
+          <div className="card card__dashboard">
+            <div className="card__header">
+              <p>Top Tags</p>
+            </div>
+            <div className="card__body">
+              <Table
+                headerData={topTags.head}
+                bodyData={topTags.body}
+                renderHeader={(item, index) => renderTagHead(item, index)}
+                renderBody={(item, index) => renderTagBody(item, index)}
+              />
+            </div>
+            <div className="card__footer">
+              <Link to="/tag">
+                <Button>View All</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="col-6 col-md-12">
+          <div className="card card__dashboard">
+            <div className="card__header">
+              <p>Top Negative Videos</p>
+            </div>
+            <Chart
+              options={{
+                labels: tagNames,
+                ...chartOption.options,
+              }}
+              series={[{ name: "Videos by tag", data: tagScanneds }]}
+              type="bar"
+              horizontal="true"
             />
           </div>
         </div>
