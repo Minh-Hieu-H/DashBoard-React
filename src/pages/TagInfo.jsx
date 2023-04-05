@@ -90,17 +90,10 @@ const TagInfo = () => {
   const dispatch = useDispatch();
   const ThemeReducer = useSelector((state) => state.theme.mode);
   const videoByTag = useSelector((state) => state.tagDetails)
-  const { loading, videos, error } = videoByTag
+  const { loading, tagData, error } = videoByTag
   useEffect(() => {
     dispatch(getTagDetail(tagid))
-  }, [tagid]);
-  if (videos) {
-    const negative_list = videos.filter((video) => video.vd_label === 2)
-    const positive_list = videos.filter((video) => video.vd_label === 1)
-    const neural_list = videos.filter((video) => video.vd_label === 0)
-    console.log([negative_list.length, positive_list.length, neural_list.length])
-  }
-  console.log("Loading is :", loading, "  Video is: ", videos, " Error is: ", error)
+  }, [tagid,dispatch]);
   return (
     <>
       {
@@ -108,7 +101,7 @@ const TagInfo = () => {
           error ? (<div> <Message variant="alert-danger">{error}</Message></div>) :
             <div>
               <p className="section__header page-header">
-                Tag Manager / Tag: <span className="tag-span">{tagid}</span>
+                Tag Manager / Tag: <span className="tag-span">{tagData["vd_tag"]}</span>
               </p>
               <div className="col-12">
                 <div className="card row">
@@ -116,11 +109,12 @@ const TagInfo = () => {
                     <div className="card__body card__body-p">
                       <p>
                         Tag Name:{" "}
-                        <span className="text-bold tag-span">{tagid}</span>
+                        <span className="text-bold tag-span">{tagData["vd_tag"]}</span>
                       </p>
                       <p>
                         All Scanned Contents:{" "}
-                        <span className="text-bold tag-span">{videos.length}</span>
+                        <span className="text-bold tag-span">{
+                          tagData["countVideos"] ? tagData["countVideos"]:0 }</span>
                       </p>
                       <p>
                         Scanned Videos In Last 1 Year:{" "}
@@ -169,7 +163,7 @@ const TagInfo = () => {
                               theme: { mode: "light" },
                             }
                         }
-                        series={videos ? [videos.filter((video) => video.vd_label === 2).length, videos.filter((video) => video.vd_label === 1).length, videos.filter((video) => video.vd_label === 0).length] : [1,0,0]}
+                        series={tagData["arr_statitics"] ? tagData["arr_statitics"] :[1,0,0] }
                         type="pie"
                       />
                     </div>
@@ -181,7 +175,7 @@ const TagInfo = () => {
                 <div className="card__header">
                   <p>Top videos of Tag</p>
                 </div>
-                <VideoGrid limit={8} videos={videos} />
+                <VideoGrid limit={8} videos={tagData["videos"]?tagData["videos"]: [] } />
               </div>
             </div>
 

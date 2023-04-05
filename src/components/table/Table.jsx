@@ -29,7 +29,6 @@ const Table = (props) => {
   const showCurrentPage = (page) => {
     const start = page * Number(props.limit);
     const end = start + Number(props.limit);
-    console.log("Check Show current",props.bodyData.slice(start, end))
     setDataShow(props.bodyData.slice(start, end));
     setCurrentPage(page);
   };

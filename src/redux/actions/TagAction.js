@@ -29,12 +29,10 @@ export const getListTag = () => async (dispatch) => {
 };
 
 // Get video by tag
-export const getTagDetail = (tag) => async (dispatch) => {
+export const getTagDetail = (tagId) => async (dispatch) => {
   try {
     dispatch({ type: "TAG_DETAILS_REQUEST" });
-    const { data } = await axios.get(`${URL}/api/tags/${tag}`);
-    console.log(`Đường link là ${URL}/api/tags/${tag} `);
-    console.log(data);
+    const { data } = await axios.get(`${URL}/api/tags/${tagId}`);
     dispatch({ type: "TAG_DETAILS_SUCCESS", payload: data });
   } catch (error) {
     dispatch({

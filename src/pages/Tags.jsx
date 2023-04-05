@@ -84,7 +84,7 @@ const Tags = () => {
             onClick={() => {
               item.count === 0
                 ? alert("Chưa có video mới")
-                : viewDetails(item.vd_tag);
+                : viewDetails(item._id);
             }}
             className="btn btn-view"
           >

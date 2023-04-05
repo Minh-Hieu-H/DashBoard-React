@@ -12,13 +12,13 @@ export const tagListReducer = (state = {tags_list:[],by_tags_list:[]},action) =>
 }}
 //  Reducer video by tag
 export const  tagDetailsReducer =(
-    state ={videos: []},action
+    state ={tagData: {}},action
 )=> {
     switch(action.type){
         case 'TAG_DETAILS_REQUEST':
-            return {loading:true,videos:[]}
+            return {loading:true,tagData:{}}
         case 'TAG_DETAILS_SUCCESS':
-            return {loading:false, videos:action.payload}
+            return {loading:false, tagData:action.payload}
         case 'TAG_DETAILS_FAIL':
             return {loading:false,error:action.payload}
         default: 
