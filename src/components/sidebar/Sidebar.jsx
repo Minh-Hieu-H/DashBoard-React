@@ -27,7 +27,7 @@ const Sidebar = () => {
   const locationPath = useLocation();
 
   const handleLocation = () => {
-    switch (locationPath.pathname) {
+    switch (window.location.pathname) {
       case "/tag":
         return "/tag";
       case "/source":

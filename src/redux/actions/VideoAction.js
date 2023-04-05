@@ -4,7 +4,7 @@ import URL from "../Url";
 // GET ALL LIST VIDEO
 export const getListVideo = (params) => async (dispatch) => {
   try {
-    console.log(`Link url: ${URL}/api/videos/all`);
+    // console.log(`Link url: ${URL}/api/videos/all`);
     dispatch({ type: "VIDEO_LIST_REQUEST" });
 
     let query = "";
@@ -21,10 +21,10 @@ export const getListVideo = (params) => async (dispatch) => {
         ? `&react=${params.react}`
         : `react=${params.react}`;
     }
-    console.log("Params đã được truyền vào đây:", params);
-    console.log(`${URL}/api/videos/all?${query}`);
+    // console.log("Params đã được truyền vào đây:", params);
+    // console.log(`${URL}/api/videos/all?${query}`);
     const { data } = await axios.get(`${URL}/api/videos/all?${query}`);
-    console.log(data);
+    // console.log(data);
     dispatch({ type: "VIDEO_LIST_SUCCESS", payload: data });
   } catch (error) {
     console.log(error);
@@ -32,7 +32,7 @@ export const getListVideo = (params) => async (dispatch) => {
     //   error.response && error.response.data.message
     //     ? error.response.data.message
     //     : error.message;
-    const message = "Có lỗi khi thực hiện  tìm kiếm";
+    const message = "Có lỗi khi thực hiện tìm kiếm";
     dispatch({
       type: "VIDEO_LIST_FAIL",
       payload: message,
@@ -74,6 +74,22 @@ export const toggleFollow = (id, isFollowed) => async (dispatch) => {
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message,
+    });
+  }
+};
+
+// Get top negative videos
+export const getTopNegVideo = () => async (dispatch) => {
+  try {
+    dispatch({ type: "VIDEO_LIST_REQUEST" });
+    const { data } = await axios.get(`${URL}/api/videos/top-neg`);
+    // console.log(data);
+    dispatch({ type: "VIDEO_LIST_SUCCESS", payload: data });
+  } catch (error) {
+    const message = "Có lỗi khi load dashboard";
+    dispatch({
+      type: "VIDEO_LIST_FAIL",
+      payload: message,
     });
   }
 };

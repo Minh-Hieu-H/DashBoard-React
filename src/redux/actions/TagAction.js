@@ -9,18 +9,18 @@ export const getListTag = () => async (dispatch) => {
     const response_by_tag = await axios.get(`${URL}/api/videos/by-tag`);
     const data_tag = response_tag["data"];
     const data_by_tag = response_by_tag["data"];
-    console.log(data_by_tag, data_tag);
+    // console.log(data_by_tag, data_tag);
     dispatch({
       type: "TAG_LIST_SUCCESS",
       payload1: data_tag,
       payload2: data_by_tag,
     });
   } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-
+    // const message =
+    //   error.response && error.response.data.message
+    //     ? error.response.data.message
+    //     : error.message;
+    const message = "Internal Server Error"
     dispatch({
       type: "TAG_LIST_FAIL",
       payload: message,
@@ -51,15 +51,10 @@ export const getTagDetail = (tag) => async (dispatch) => {
 export const createTag = (tag) => async (dispatch) => {
   try {
     dispatch({ type: "TAG_CREATE_REQUEST" });
-
     const { data } = await axios.post(`${URL}/api/tags/`, { tagValue: tag });
-
     dispatch({ type: "TAG_CREATE_SUCCESS", payload: data });
   } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
+    const message = "Có lỗi khi thực hiện thêm tag"
     dispatch({
       type: "TAG_CREATE_FAIL",
       payload: message,
