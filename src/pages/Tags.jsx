@@ -8,11 +8,13 @@ import tagList from "../assets/JsonData/tag-data.json";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { getListTag, createTag } from "../redux/actions/TagAction";
+
 // Handle Error
 import Loading from "../components/loadingError/Loading";
 import Message from "../components/loadingError/Error";
-import Toast from "../components/loadingError/Toast";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // CSS
 import "./Pages.css";
 import "antd/dist/antd.css";
@@ -24,6 +26,7 @@ const customerTableHead = [
   "view details",
   "delete",
 ];
+
 const ToastObjects = {
   pauseOnFocusLoss: false,
   draggable: false,
@@ -48,7 +51,7 @@ const Tags = () => {
           return { ...tag, count };
         })
       : [];
-      
+
   //  State add tag
   const tagCreateState = useSelector((state) => state.tagCreate);
   const {
@@ -59,14 +62,19 @@ const Tags = () => {
 
   useEffect(() => {
     if (successCreateTag) {
-      // toast.success("Tag Added", ToastObjects);
-      alert("Thêm dữ liệu thành công");
+      toast.success("Tag Added", ToastObjects);
       setTagValue("");
       setOpenAdd(false);
       dispatch({ type: "TAG_CREATE_RESET" });
     }
+    if (errorCreateTag) {
+      toast.error("Duplicate Tag", ToastObjects);
+      setTagValue("");
+      setOpenAdd(false);
+      dispatch({ type: "TAG_CREATE_FAIL" });
+    }
     dispatch(getListTag());
-  }, [dispatch, successCreateTag]);
+  }, [dispatch, successCreateTag, errorCreateTag]);
 
   //  coding layout
   const viewDetails = (tagid) => history.push("/tag/" + tagid);
@@ -113,16 +121,17 @@ const Tags = () => {
 
   const [tagValue, setTagValue] = useState("");
 
-  console.log("Tag value is:", tagValue);
+  // console.log("Tag value is:", tagValue);
   const showModalAdd = () => {
     setOpenAdd(true);
   };
 
   const addTagHandle = (e) => {
     e.preventDefault();
-    console.log("Đã vào đến đây");
+    // console.log("Đã vào đến đây");
     dispatch(createTag(tagValue));
   };
+
   const handleOkAdd = () => {
     setConfirmLoading(true);
     setTimeout(() => {
@@ -249,6 +258,7 @@ const Tags = () => {
           </Modal>
         </div>
       )}
+      <ToastContainer />
     </>
   );
 };

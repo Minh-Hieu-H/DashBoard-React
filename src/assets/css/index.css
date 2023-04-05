@@ -129,6 +129,7 @@ input:focus {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  padding: 10px 30px 30px;
 }
 .light-background {
   background-color: var(--main-bg-light);

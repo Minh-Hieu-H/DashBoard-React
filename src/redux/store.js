@@ -6,7 +6,7 @@ import ThemeReducer from "./reducers/ThemeReducer";
 import {videoListReducer,videoDetailsReducer} from "./reducers/VideoReducer"
 import { tagListReducer,tagDetailsReducer,tagCreateReducer } from "./reducers/TagReducer";
 import { streamListReducer } from "./reducers/StreamReducer";
-import { channelListReducer,channelDetailsReducer } from "./reducers/ChannelReducer";
+import { channelListReducer,channelDetailsReducer,channelCreateReducer } from "./reducers/ChannelReducer";
 
 const rootReducer = combineReducers(
     {theme:ThemeReducer,
@@ -18,6 +18,7 @@ const rootReducer = combineReducers(
      streamList: streamListReducer,
      channelList:channelListReducer,
      channelDetails:channelDetailsReducer,
+     channelCreate:channelCreateReducer,
     })
 
 const middleware = [thunk]

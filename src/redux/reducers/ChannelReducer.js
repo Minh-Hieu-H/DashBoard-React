@@ -26,3 +26,20 @@ export const  channelDetailsReducer =(
             return state;
     }
 }
+
+
+// Reducer create channel
+export const channelCreateReducer = (state = {}, action) => {
+    switch (action.type) {
+      case "CHANNEL_CREATE_REQUEST":
+        return { loading: true };
+      case "CHANNEL_CREATE_SUCCESS":
+        return { loading: false, channel: action.payload, success: true };
+      case "CHANNEL_CREATE_FAIL":
+        return { loading: false, error: action.payload };
+      case "CHANNEL_CREATE_RESET":
+        return {};
+      default:
+        return state;
+    }
+  };

@@ -9,7 +9,7 @@ export const getListTag = () => async (dispatch) => {
     const response_by_tag = await axios.get(`${URL}/api/videos/by-tag`);
     const data_tag = response_tag["data"];
     const data_by_tag = response_by_tag["data"];
-    console.log(data_by_tag, data_tag);
+    // console.log(data_by_tag, data_tag);
     dispatch({
       type: "TAG_LIST_SUCCESS",
       payload1: data_tag,
@@ -20,7 +20,6 @@ export const getListTag = () => async (dispatch) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-
     dispatch({
       type: "TAG_LIST_FAIL",
       payload: message,
@@ -35,12 +34,14 @@ export const getTagDetail = (tagId) => async (dispatch) => {
     const { data } = await axios.get(`${URL}/api/tags/${tagId}`);
     dispatch({ type: "TAG_DETAILS_SUCCESS", payload: data });
   } catch (error) {
+    const message =
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message;
     dispatch({
       type: "TAG_DETAILS_FAIL",
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload:message
+
     });
   }
 };
@@ -49,18 +50,17 @@ export const getTagDetail = (tagId) => async (dispatch) => {
 export const createTag = (tag) => async (dispatch) => {
   try {
     dispatch({ type: "TAG_CREATE_REQUEST" });
-
     const { data } = await axios.post(`${URL}/api/tags/`, { tagValue: tag });
-
     dispatch({ type: "TAG_CREATE_SUCCESS", payload: data });
   } catch (error) {
     const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
+    error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message;
     dispatch({
       type: "TAG_CREATE_FAIL",
-      payload: message,
+      payload:message
+
     });
   }
 };

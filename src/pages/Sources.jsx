@@ -7,13 +7,14 @@ import Table from "../components/table/Table";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { getListChannel } from "../redux/actions/ChannelAction";
+import { getListChannel, createChannel } from "../redux/actions/ChannelAction";
 
 // Handle Error
 import Loading from "../components/loadingError/Loading";
 import Message from "../components/loadingError/Error";
 import Toast from "../components/loadingError/Toast";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // 
 import tagList from "../assets/JsonData/source-data.json";
 import "./Pages.css";
@@ -26,7 +27,12 @@ const customerTableHead = [
   "view details",
   "unfollow",
 ];
-
+const ToastObjects = {
+  pauseOnFocusLoss: false,
+  draggable: false,
+  pauseOnHover: false,
+  autoClose: 2000,
+};
 const Sources = () => {
   const history = useHistory();
 
@@ -43,18 +49,36 @@ const Sources = () => {
         return { ...channel, count };
       })
       : [];
-  
 
+  //  State add source
+  const channelCreateState = useSelector((state) => state.channelCreate);
+  const {
+    loading: loadingCreateChannel,
+    error: errorCreateChannel,
+    success: successCreateChannel,
+  } = channelCreateState;
 
   //  State add tag
-
-
   useEffect(() => {
+    if (successCreateChannel) {
+      toast.success("Channel Added", ToastObjects);
+      setChannelValue("");
+      setOpenAdd(false);
+      dispatch({ type: "CHANNEL_CREATE_RESET" });
+    }
+    if (errorCreateChannel) {
+      toast.error(errorCreateChannel, ToastObjects);
+      setChannelValue("");
+      setOpenAdd(false);
+      dispatch({ type: "CHANNEL_CREATE_FAIL" });
+    }
     dispatch(getListChannel());
-  }, [dispatch]);
+  }, [dispatch, successCreateChannel, errorCreateChannel]);
+  console.log("Error is", errorCreateChannel)
+
   const renderHead = (item, index) => <th key={index}>{item}</th>;
-  
-    //  coding layout
+
+  //  coding layout
   const viewDetails = (channelid) => history.push("/source/" + channelid);
   const renderBody = (item, index) => (
     <tr key={index}>
@@ -97,8 +121,14 @@ const Sources = () => {
 
   const [confirmLoading, setConfirmLoading] = useState(false);
 
+  const [channelValue, setChannelValue] = useState("");
+
   const showModalAdd = () => {
     setOpenAdd(true);
+  };
+  const addChannelHandle = (e) => {
+    e.preventDefault();
+    dispatch(createChannel(channelValue));
   };
 
   const handleOkAdd = () => {
@@ -185,6 +215,10 @@ const Sources = () => {
                     (e.target.style.backgroundColor = currentMainColorVar),
                   onMouseLeave: (e) =>
                     (e.target.style.backgroundColor = currentSecondColorVar),
+
+                  onClick: (e) => {
+                    addChannelHandle(e);
+                  }
                 }}
                 cancelButtonProps={{
                   className: "cancel-btn"
@@ -192,7 +226,11 @@ const Sources = () => {
               >
                 <div className="modalBody">
                   <label className="modalLabel">Source URL:</label>
-                  <input className="modalInput" type="text"></input>
+                  <input className="modalInput" type="text"
+                    value={channelValue}
+                    onChange={(e) => setChannelValue(e.target.value)}
+
+                  ></input>
                 </div>
               </Modal>
               <Modal
@@ -223,6 +261,7 @@ const Sources = () => {
             </div>
           )
       }
+      <ToastContainer />
     </>
   );
 };
